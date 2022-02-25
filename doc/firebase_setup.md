@@ -41,11 +41,6 @@ $ chmod 755 ~/bin/firebase
 $ firebase --version
 10.2.1
 ```
-Then run
-```
-$ dart pub global activate flutterfire_cli
-```
-to download and install the Flutter Firebase CLI. You'll have to add the install path to your PATH (something like `/home/tom/.pub-cache/bin`).
 
 That's all for installation! Kinda a lot, and we'll probably never use it again.
 
