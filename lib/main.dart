@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'signup.dart';
 
 Map<String, dynamic> doc = {};
 
@@ -48,7 +49,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/' : (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/signup' : (context) => const SignupPage(),
+      },
     );
   }
 }
@@ -127,6 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/signup')
+            }, child: const Text("Sign Up"))
           ],
         ),
       ),
