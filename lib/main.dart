@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Just Eat It',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green, //figure out better green
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Just Eat It'),
     );
   }
 }
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
+            Text("Locations: $doc"),
           ],
         ),
       ),
@@ -135,6 +135,45 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class RestaurantInformation extends StatefulWidget {
+  //const RestaurantInformation({ Key? key }) : super(key: key);
+
+  @override
+  State<RestaurantInformation> createState() => _RestaurantInformationState();
+}
+
+class _RestaurantInformationState extends State<RestaurantInformation> {
+
+  final Stream<QuerySnapshot> _restaurantStream = FirebaseFirestore.instance.collection("restaurant").snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: _restaurantStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+            return ListTile(
+              title: Text(data['Name']),
+              subtitle: Text(data['address']),
+            );
+          }).toList(),
+        );
+      },
+
     );
   }
 }
