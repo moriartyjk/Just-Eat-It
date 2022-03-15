@@ -3,8 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'dart:math';
 
 Map<String, dynamic> doc = {};
+//CollectionReference<Map<String, dynamic>> col = {};
+//Map<int, QueryDocumentSnapshot<Map<String, dynamic>>> docs = {};
+int randIndex = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +29,9 @@ void main() async {
   }
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   doc = (await firestore.collection("restaurants").get()).docs.first.data();
+  //doc = (await firestore.collection("restaurants").get()).docs.elementAt(randIndex).data();
+  //docs = (await firestore.collection("restaurants").get()).docs.asMap();
+  //doc = (await firestore.collection("restaurants").get()).docs.elementAt(35).data();
   runApp(const MyApp());
 }
 
@@ -72,8 +79,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  //int _counter = 0;
 
+  //int _randIndex = 0;
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    /*
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -83,97 +95,52 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }*/
+
+  void _getRandIndex(){
+    setState(() {
+      randIndex = Random().nextInt(30); //random number [0, 37]
+      //print(randIndex);
+      _getRestaurant();
+    });
+  }
+
+  void _getRestaurant() async{
+    doc = (await firestore.collection("restaurants").get()).docs.elementAt(randIndex).data(); 
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    String name = doc["name"];
+    //String location = doc["location"];
+
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              '$randIndex',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text("Locations: $doc"),
+            Text("Name: $name"),
+            //Text("Location: $location"),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _getRandIndex, //trigger random number generation
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class RestaurantInformation extends StatefulWidget {
-  //const RestaurantInformation({ Key? key }) : super(key: key);
-
-  @override
-  State<RestaurantInformation> createState() => _RestaurantInformationState();
-}
-
-class _RestaurantInformationState extends State<RestaurantInformation> {
-
-  final Stream<QuerySnapshot> _restaurantStream = FirebaseFirestore.instance.collection("restaurant").snapshots();
-
-  @override
-  Widget build(BuildContext context) {
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: _restaurantStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
-
-        return ListView(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-            return ListTile(
-              title: Text(data['Name']),
-              subtitle: Text(data['address']),
-            );
-          }).toList(),
-        );
-      },
-
     );
   }
 }
