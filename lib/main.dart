@@ -41,17 +41,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue, //figure out better green
       ),
-<<<<<<< HEAD
       //home: const MyHomePage(title: 'Just Eat It'),
       routes: {
         '/' :(context) => const MyHomePage(title: 'Just Eat It'),
-        //'/signup' : (context) => const SignupPage(),
-        '/restaurants' :(context) => const RestaurantsPage(),
-=======
-      routes: {
-        '/' : (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
         '/signup' : (context) => const SignupPage(),
->>>>>>> origin/main
+        '/restaurants' :(context) => const RestaurantsPage(),
       },
     );
   }
@@ -122,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-<<<<<<< HEAD
             //Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/signup')
@@ -130,12 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/restaurants')
             }, child: const Text("Restaurant Suggestion")),
-=======
-            Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
-            TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/signup')
-            }, child: const Text("Sign Up"))
->>>>>>> origin/main
           ],
         ),
       ),
