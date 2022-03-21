@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // The sign up page.
@@ -20,6 +21,8 @@ class SignupPageState extends State<SignupPage> {
   /// Whether the password is hidden or not. This also controls
   /// the visible/invisible icon.
   bool passwordHidden = true;
+  /// Used to display Firebase auth errors
+  String formError = '';
 
   /// Create the sign up page.
   ///
@@ -91,17 +94,36 @@ class SignupPageState extends State<SignupPage> {
                     if (password == null || password.isEmpty) {
                       return 'Please enter a password';
                     } else if (password.length < 8) {
-                      return 'Please enter a password more than eight letters long';
+                      return 'Please enter a password at least eight letters long';
                     }
                     return null;
                   },
                 ),
                 const Divider(color: Colors.transparent, height: 20),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      // TODO: actually create the account and log in
-                      print("email: ${emailController.text}, password: ${passwordController.text}");
+                      try {
+                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                        Navigator.popAndPushNamed(context, '/preferences');
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'email-already-in-use') {
+                          setState(() => formError = 'An account already exists for ${emailController.text}. Please try again with a different email.');
+                        } else if (e.code == 'invalid-email') {
+                          setState(() => formError = 'Please enter a valid email.');
+                        } else if (e.code == 'operation-not-allowed') {
+                          setState(() => formError = 'Not allowed.');
+                        } else if (e.code == 'weak-password') {
+                          setState(() => formError = 'Please enter a stronger password. Try to include letters, numbers, and special characters.');
+                        } else {
+                          setState(() => formError = e.code);
+                        }
+                      } catch(e) {
+                        setState(() => formError = 'An error occurred. Sorry about that.');
+                      }
                     }
                   },
                   child: Container(
@@ -113,7 +135,11 @@ class SignupPageState extends State<SignupPage> {
                     ),
                   )
                 ),
-                const Divider(color: Colors.transparent, height: 10),
+                Container(
+                  width: 350,
+                  padding: EdgeInsets.symmetric(horizontal: 0, vertical: (formError.isEmpty ? 0 : 10)),
+                  child: Text(formError, style: const TextStyle(color: Colors.red), textAlign: TextAlign.left),
+                ),
                 Row(children: [
                   const Text('Already have an account?'),
                   TextButton(
@@ -122,8 +148,7 @@ class SignupPageState extends State<SignupPage> {
                       style: TextStyle(decoration: TextDecoration.underline)
                     )
                   )
-                ]),
-                Divider(color: Colors.grey[300], height: 40),
+                ])
               ],
             ),
           ),
