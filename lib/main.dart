@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:justeatit/restaurants.dart';
 import 'firebase_options.dart';
 import 'dart:math';
 
@@ -37,9 +38,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Just Eat It',
       theme: ThemeData(
-        primarySwatch: Colors.green, //figure out better green
+        primarySwatch: Colors.blue, //figure out better green
       ),
-      home: const MyHomePage(title: 'Just Eat It'),
+      //home: const MyHomePage(title: 'Just Eat It'),
+      routes: {
+        '/' :(context) => const MyHomePage(title: 'Just Eat It'),
+        //'/signup' : (context) => const SignupPage(),
+        '/restaurants' :(context) => const RestaurantsPage(),
+      },
     );
   }
 }
@@ -55,54 +61,74 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  int _counter = 0;
 
-  void _randGen(){
-    //allows for realtime update of randIndex
+  void _incrementCounter() {
     setState(() {
-      randIndex = Random().nextInt(37); // random num [0, 37)
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
     });
   }
-  @override
+
+    @override
   Widget build(BuildContext context) {
-
-    CollectionReference restaurants = FirebaseFirestore.instance.collection("restaurants");
-
-    String docID = randIndex.toString(); //cast index to string because documents are stored by "numerical" indexes
-    //print("Document Id: $docID");
-  
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        //This is based on implementation from Flutter docs in https://firebase.flutter.dev/docs/firestore/usage/
-        child: FutureBuilder<DocumentSnapshot>(
-          future: restaurants.doc(docID).get(),
-          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if(snapshot.hasError){
-              return const Text("Something went wrong");
-            }
-
-            if(snapshot.hasData && !snapshot.data!.exists){
-              return const Text("Document does not exist",);
-            }
-
-            if(snapshot.connectionState == ConnectionState.done) {
-              Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-              return Text(
-                "Document Id: $docID\nName: ${data["name"]}", 
-                style: const TextStyle(fontSize: 40),
-              );
-            }
-            return const Text("loading"); //appears while firestore is retrieving data
-          },
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Invoke "debug painting" (press "p" in the console, choose the
+          // "Toggle Debug Paint" action from the Flutter Inspector in Android
+          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+          // to see the wireframe for each widget.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            //Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/signup')
+            }, child: const Text("Sign Up")),
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/restaurants')
+            }, child: const Text("Restaurant Suggestion")),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _randGen, //trigger random number generation
-        tooltip: 'Retry',
-        child: const Icon(Icons.refresh),
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
