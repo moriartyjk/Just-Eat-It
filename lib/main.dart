@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:justeatit/restaurants.dart';
 import 'firebase_options.dart';
-import 'dart:math';
 
 int randIndex = 0; //global index
 
