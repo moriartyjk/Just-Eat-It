@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:justeatit/customizer.dart';
 import 'package:justeatit/restaurants.dart';
 import 'firebase_options.dart';
 import 'restaurants.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/' :(context) => const MyHomePage(title: 'Just Eat It'),
         '/signup' : (context) => const SignupPage(),
         '/restaurants' :(context) => const RestaurantsPage(),
+        '/customizer' :(context) => const CustomizerPage(),
       },
     );
   }
@@ -123,6 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/restaurants')
             }, child: const Text("Restaurant Suggestion")),
+             TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/customizer')
+            }, child: const Text("Selection Customizing")),
           ],
         ),
       ),
