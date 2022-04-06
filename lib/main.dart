@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/restaurants.dart';
 import 'firebase_options.dart';
 import 'restaurants.dart';
 import 'signup.dart';
+import 'login.dart';
 
 int randIndex = 0; //global index
 
@@ -15,18 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  try {
-    UserCredential cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: "user@example.com",
-      password: "***"
-    );
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-    }
-  }
+  print(FirebaseAuth.instance.currentUser);
 
   runApp(const MyApp());
 }
@@ -46,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/' :(context) => const MyHomePage(title: 'Just Eat It'),
         '/signup' : (context) => const SignupPage(),
+        '/login' : (context) => const LoginPage(),
         '/restaurants' :(context) => const RestaurantsPage(),
         '/customizer' :(context) => const CustomizerPage(),
       },
@@ -118,16 +108,24 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            //Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/signup')
             }, child: const Text("Sign Up")),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/restaurants')
             }, child: const Text("Restaurant Suggestion")),
+<<<<<<< HEAD
              TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/customizer')
             }, child: const Text("Selection Customizing")),
+=======
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/login')
+            }, child: const Text("Log in")),
+            TextButton(onPressed: () => {
+              FirebaseAuth.instance.signOut()
+            }, child: const Text("Log out")),
+>>>>>>> 6a4e63a901f4b8955b258093ba70abdfe1184d38
           ],
         ),
       ),
