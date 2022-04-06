@@ -112,20 +112,17 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.pushNamed(context, '/signup')
             }, child: const Text("Sign Up")),
             TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/restaurants')
-            }, child: const Text("Restaurant Suggestion")),
-<<<<<<< HEAD
-             TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/customizer')
-            }, child: const Text("Selection Customizing")),
-=======
-            TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/login')
             }, child: const Text("Log in")),
             TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/restaurants')
+            }, child: const Text("Restaurant Suggestion")),
+             TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/customizer')
+            }, child: const Text("Selection Customization")),
+            TextButton(onPressed: () => {
               FirebaseAuth.instance.signOut()
             }, child: const Text("Log out")),
->>>>>>> 6a4e63a901f4b8955b258093ba70abdfe1184d38
           ],
         ),
       ),
