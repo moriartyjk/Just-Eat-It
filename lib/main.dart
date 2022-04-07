@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:justeatit/customizer.dart';
+import 'package:justeatit/restaurant_list.dart';
 import 'package:justeatit/restaurants.dart';
 import 'firebase_options.dart';
 import 'restaurants.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         '/signup' : (context) => const SignupPage(),
         '/login' : (context) => const LoginPage(),
         '/restaurants' :(context) => const RestaurantsPage(),
-        '/customizer' :(context) => const CustomizerPage(),
+        '/cuisine' :(context) => const CustomizerPage(),
+        '/list' :(context) => const RestaurantListPage(),
       },
     );
   }
@@ -118,8 +120,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.pushNamed(context, '/restaurants')
             }, child: const Text("Restaurant Suggestion")),
              TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/customizer')
-            }, child: const Text("Selection Customization")),
+              Navigator.pushNamed(context, '/list')
+            }, child: const Text("Restaurant List")),
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/cuisine')
+            }, child: const Text("Cuisine Selection")),
             TextButton(onPressed: () => {
               FirebaseAuth.instance.signOut()
             }, child: const Text("Log out")),

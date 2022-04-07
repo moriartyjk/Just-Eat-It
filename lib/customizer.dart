@@ -20,44 +20,64 @@ class _CustomizerPageState extends State<CustomizerPage> {
 
   //helping functions
 
+//build layout
   @override
   Widget build(BuildContext context) {
 
     //build globals
-    CollectionReference restaurants = FirebaseFirestore.instance.collection("restaurants");
+    
+    //reference to the cuisine collection
+    CollectionReference cuisine = FirebaseFirestore.instance.collection("cuisine");
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Selection Customization'),
+        title: const Text('Cuisine Selection'),
       ),
-      body: _buildSuggestions(),
-    );
-  }
+      //body of list view
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  //color: Colors.blue,
+                  height: 150,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 30),
+                    ),
+                    onPressed: () {},
+                    child: FutureBuilder<DocumentSnapshot>(
+                      future: cuisine.doc(index.toString()).get(),
+                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if(snapshot.hasError){
+                          return const Text("Something went wrong");
+                        }
 
-  Widget _buildSuggestions(){
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemBuilder: (context, i) {
-        if(i.isOdd){
-          return const Divider();
-        }
+                        if(snapshot.hasData && !snapshot.data!.exists){
+                          return const Text("Document does not exist",);
+                        }
 
-
-        return _buildRow();
-      },
-    );
-  }
-
-  //This is where the restaurant suggestions are pulled from
-  Widget _buildRow(){
-    return const ListTile(
-      title: Text("Tile"),
-      trailing: Icon(
-        Icons.favorite,
-        color: Colors.red,
-        semanticLabel: 'Favorited',
+                        if(snapshot.connectionState == ConnectionState.done) {
+                          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                          return Text(
+                            "${data["name"]}", 
+                            style: const TextStyle(fontSize: 40),
+                          );
+                        }
+                        return const Text("loading"); //appears while firestore is retrieving data
+                      },
+                    ), 
+                  ),
+                );
+              },
+              childCount: 4, //adjusts the current length of the list
+              )
+            )
+        ],
       ),
     );
-
   }
-}
+
+}//class end
