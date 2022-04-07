@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'appbar.dart';
+
 // The sign up page.
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -37,10 +39,7 @@ class SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create an Account'),
-        centerTitle: true,
-      ),
+      appBar: JustEatItAppBar.create(context),
       body: Form(
         key: formKey,
         child: Center(
