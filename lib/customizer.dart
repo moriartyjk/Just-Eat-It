@@ -37,7 +37,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
               (context, int index) {
                 return Container(
                   alignment: Alignment.center,
-                  //color: Colors.blue,
+                  //color: const Color.fromARGB(255, 18, 119, 21),
                   height: 150,
                   child: TextButton(
                     style: TextButton.styleFrom(
@@ -59,7 +59,10 @@ class _CustomizerPageState extends State<CustomizerPage> {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                           return Text(
                             "${data["name"]}", 
-                            style: const TextStyle(fontSize: 40),
+                            style: const TextStyle(
+                              fontSize: 40,
+                              color: Color.fromARGB(255, 18, 119, 21),
+                              ),
                           );
                         }
                         return const Text("loading"); //appears while firestore is retrieving data
