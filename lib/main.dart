@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:justeatit/customizer.dart';
+import 'package:justeatit/restaurant_list.dart';
 import 'package:justeatit/appbar.dart';
 import 'package:justeatit/restaurants.dart';
 import 'firebase_options.dart';
@@ -37,6 +39,8 @@ class MyApp extends StatelessWidget {
         '/signup' : (context) => const SignupPage(),
         '/login' : (context) => const LoginPage(),
         '/restaurants' :(context) => const RestaurantsPage(),
+        '/preferences' :(context) => const CustomizerPage(),
+        '/list' :(context) => const RestaurantListPage(),
       },
     );
   }
@@ -53,6 +57,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  /*
   int _counter = 0;
 
   void _incrementCounter() {
@@ -64,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
-  }
+  }*/
 
     @override
   Widget build(BuildContext context) {
@@ -96,32 +101,26 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/signup')
             }, child: const Text("Sign Up")),
             TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/restaurants')
-            }, child: const Text("Restaurant Suggestion")),
-            TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/login')
             }, child: const Text("Log in")),
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/restaurants')
+            }, child: const Text("Restaurant Suggestion")),
+             TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/list')
+            }, child: const Text("Restaurant List")),
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/preferences')
+            }, child: const Text("Preference Selection")),
             TextButton(onPressed: () => {
               FirebaseAuth.instance.signOut()
             }, child: const Text("Log out")),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
