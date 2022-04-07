@@ -101,24 +101,62 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const Text(
+              "Welcome to Just Eat It!",
+              style: TextStyle(
+                fontSize: 40, 
+                color: Color.fromARGB(255, 18, 119, 21)),
+              ),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/signup')
-            }, child: const Text("Sign Up")),
+            }, child: const Text(
+                "Sign Up",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+              )
+              ),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/login')
-            }, child: const Text("Log in")),
+            }, child: const Text(
+              "Log in",
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+              )
+              ),
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/restaurants')
-            }, child: const Text("Restaurant Suggestion")),
+            }, child: const Text(
+                "Get Suggestion!",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+              )
+              ),
              TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/list')
-            }, child: const Text("Restaurant List")),
-            TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/preferences')
-            }, child: const Text("Preference Selection")),
+            }, child: const Text(
+                "View Full Restaurant Selection",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+                )
+              ),
             TextButton(onPressed: () => {
               FirebaseAuth.instance.signOut()
-            }, child: const Text("Log out")),
+            }, child: const Text(
+                "Log out",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+                )
+              ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
