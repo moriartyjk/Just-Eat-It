@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'appbar.dart';
+
 // The login page.
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,10 +26,7 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Log In To Your Account'),
-        centerTitle: true,
-      ),
+      appBar: JustEatItAppBar.create(context),
       body: Form(
         key: formKey,
         child: Center(
