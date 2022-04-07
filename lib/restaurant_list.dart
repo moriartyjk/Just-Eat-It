@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';
-import 'dart:math';
+import 'appbar.dart';
 
 class RestaurantListPage extends StatefulWidget {
   const RestaurantListPage({ Key? key }) : super(key: key);
@@ -21,9 +18,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
 
     CollectionReference restaurants = FirebaseFirestore.instance.collection("restaurants");
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restaurant List'),
-      ),
+      appBar: JustEatItAppBar.create(context),
       //body of list view
         //created a custom scrolling list with adjustable length
       body: CustomScrollView(

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';
-import 'dart:math';
+
+import 'appbar.dart';
 
 //Globals
 
@@ -30,9 +28,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
     CollectionReference cuisine = FirebaseFirestore.instance.collection("cuisine");
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cuisine Selection'),
-      ),
+      appBar: JustEatItAppBar.create(context),
       //body of list view
       body: CustomScrollView(
         slivers: <Widget>[
