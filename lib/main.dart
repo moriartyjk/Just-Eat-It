@@ -10,37 +10,45 @@ import 'restaurants.dart';
 import 'signup.dart';
 import 'login.dart';
 
-int randIndex = 0; //global index
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print(FirebaseAuth.instance.currentUser);
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    const darkGreen = MaterialColor(
+                        0xFF1B5E20,
+                        <int, Color>{
+                          50: Color(0xFF66BB6A),
+                          100: Color(0xFF4CAF50),
+                          200: Color(0xFF43A047),
+                          300: Color(0xFF388E3C),
+                          400: Color(0xFF2E7D32),
+                          500: Color(0xFF1B5E20),
+                          600: Color(0xFF165814),
+                          700: Color(0xFF10500E),
+                          800: Color(0xFF10500E),
+                          900: Color(0xFF10500E),
+                        },
+                      );
+
     return MaterialApp(
       title: 'Just Eat It',
-      theme: ThemeData(
-        primarySwatch: Colors.blue, //figure out better green
-      ),
-      //home: const MyHomePage(title: 'Just Eat It'),
+      theme: ThemeData( primarySwatch: darkGreen),
       routes: {
-        '/' :(context) => const MyHomePage(title: 'Just Eat It'),
-        '/signup' : (context) => const SignupPage(),
-        '/login' : (context) => const LoginPage(),
-        '/restaurants' :(context) => const RestaurantsPage(),
-        '/preferences' :(context) => const CustomizerPage(),
-        '/list' :(context) => const RestaurantListPage(),
+        '/':            (context) => const MyHomePage(title: 'Just Eat It'),
+        '/signup':      (context) => const SignupPage(),
+        '/login':       (context) => const LoginPage(),
+        '/restaurants': (context) => const RestaurantsPage(),
+        '/preferences': (context) => const CustomizerPage(),
+        '/list':        (context) => const RestaurantListPage(),
       },
     );
   }
@@ -104,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               "Welcome to Just Eat It!",
               style: TextStyle(
-                fontSize: 40, 
+                fontSize: 40,
                 color: Color.fromARGB(255, 18, 119, 21)),
               ),
             TextButton(onPressed: () => {
