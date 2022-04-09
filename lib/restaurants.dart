@@ -15,7 +15,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   final double videoWidth = 600;
 
   final scrollController = ScrollController();
-  final videoController = VideoPlayerController.asset('slot_machine.mp4');
+  final videoController = VideoPlayerController.asset('assets/slot_machine.mp4');
   final firestore = FirebaseFirestore.instance;
 
   @override
