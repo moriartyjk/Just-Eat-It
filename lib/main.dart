@@ -15,10 +15,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   try {
-    UserCredential cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: "user@example.com",
-      password: "***"
-    );
+    UserCredential cred = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: "user@example.com", password: "***");
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       print('No user found for that email.');
@@ -43,9 +41,9 @@ class MyApp extends StatelessWidget {
       ),
       //home: const MyHomePage(title: 'Just Eat It'),
       routes: {
-        '/' :(context) => const MyHomePage(title: 'Just Eat It'),
-        '/signup' : (context) => const SignupPage(),
-        '/restaurants' :(context) => const RestaurantsPage(),
+        '/': (context) => const MyHomePage(title: 'Just Eat It'),
+        '/signup': (context) => const SignupPage(),
+        '/restaurants': (context) => const RestaurantsPage(),
       },
     );
   }
@@ -61,7 +59,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int _counter = 0;
 
   void _incrementCounter() {
@@ -75,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -117,12 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             //Text("Also, here is the information of restaurants called 'Chipotle': $doc"),
-            TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/signup')
-            }, child: const Text("Sign Up")),
-            TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/restaurants')
-            }, child: const Text("Restaurant Suggestion")),
+            TextButton(
+                onPressed: () => {Navigator.pushNamed(context, '/signup')},
+                child: const Text("Sign Up")),
+            TextButton(
+                onPressed: () => {Navigator.pushNamed(context, '/restaurants')},
+                child: const Text("Restaurant Suggestion")),
           ],
         ),
       ),
