@@ -92,7 +92,8 @@ class LoginPageState extends State<LoginPage> {
                           email: emailController.text,
                           password: passwordController.text,
                         );
-                        Navigator.popAndPushNamed(context, '/restaurants');
+                        //success:navigate to customize/suggestion page
+                        Navigator.popAndPushNamed(context, '/pref_nav');
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'invalid-email') {
                           setState(() => formError = 'Looks like ${emailController.text} isn\'t a valid email. Please try again with a different email.');

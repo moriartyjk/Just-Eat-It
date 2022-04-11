@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/restaurant_list.dart';
 import 'package:justeatit/appbar.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/restaurants': (context) => const RestaurantsPage(),
         '/preferences': (context) => const CustomizerPage(),
         '/list':        (context) => const RestaurantListPage(),
+        '/pref_nav':    (context) => const CustomizerNav(),
       },
     );
   }
@@ -115,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: 40,
                 color: Color.fromARGB(255, 18, 119, 21)),
               ),
-            TextButton(onPressed: () => {
+            /*TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/signup')
             }, child: const Text(
                 "Sign Up",
@@ -124,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Color.fromARGB(255, 18, 119, 21),
                 ),
               )
-              ),
+              ),*/
             TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/login')
             }, child: const Text(
@@ -135,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )
               ),
-            TextButton(onPressed: () => {
+            /*TextButton(onPressed: () => {
               Navigator.pushNamed(context, '/restaurants')
             }, child: const Text(
                 "Get Suggestion!",
@@ -154,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Color.fromARGB(255, 18, 119, 21),
                 ),
                 )
-              ),
+              ),*/
             TextButton(onPressed: () => {
               FirebaseAuth.instance.signOut()
             }, child: const Text(
