@@ -40,6 +40,7 @@ class _CustomizerNavState extends State<CustomizerNav> {
                     },
                   ),
               ),
+              //ability to view full list of restaurants
               Padding(
                 padding: EdgeInsets.fromLTRB(0, size.height/8, 0, 30),
                 child: ElevatedButton(
