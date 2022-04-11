@@ -3,38 +3,25 @@ import 'package:flutter/material.dart';
 
 import 'appbar.dart';
 
-// The sign up page.
-class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+// The login page.
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  SignupPageState createState() {
-    return SignupPageState();
+  LoginPageState createState() {
+    return LoginPageState();
   }
 }
 
-class SignupPageState extends State<SignupPage> {
+class LoginPageState extends State<LoginPage> {
   /// For form validation
   final formKey = GlobalKey<FormState>();
-  /// Used to read the email from the text field.
   final emailController = TextEditingController();
-  /// Used to read the password from the text field.
   final passwordController = TextEditingController();
-  /// Whether the password is hidden or not. This also controls
-  /// the visible/invisible icon.
   bool passwordHidden = true;
   /// Used to display Firebase auth errors
   String formError = '';
 
-  /// Create the sign up page.
-  ///
-  /// This consists of two text fields, one for the email and the
-  /// other for the password. Both have some basic validation. Below
-  /// them is a 'Submit' button that tries to create and login with
-  /// a new account.
-  ///
-  /// Maybe in the future we'll have Google/Facebook/etc login too,
-  /// it seems pretty easy with Firebase.
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -52,7 +39,7 @@ class SignupPageState extends State<SignupPage> {
                   child: const Icon(Icons.restaurant, size: 100),
                   padding: EdgeInsets.fromLTRB(0, size.height/8, 0, 30)
                 ),
-                const Text('Sign Up',
+                const Text('Log In',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 Divider(color: Colors.grey[300], height: 40),
@@ -67,8 +54,8 @@ class SignupPageState extends State<SignupPage> {
                     )
                   ),
                   validator: (email) {
-                    if (email == null || !isValidEmail(email)) {
-                      return 'Please enter a valid email';
+                    if (email == null || email.isEmpty) {
+                      return 'Please enter your email';
                     }
                     return null;
                   },
@@ -92,8 +79,6 @@ class SignupPageState extends State<SignupPage> {
                   validator: (password) {
                     if (password == null || password.isEmpty) {
                       return 'Please enter a password';
-                    } else if (password.length < 8) {
-                      return 'Please enter a password at least eight letters long';
                     }
                     return null;
                   },
@@ -103,20 +88,20 @@ class SignupPageState extends State<SignupPage> {
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
                       try {
-                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
                           email: emailController.text,
                           password: passwordController.text,
                         );
-                        Navigator.popAndPushNamed(context, '/preferences');
+                        Navigator.popAndPushNamed(context, '/restaurants');
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == 'email-already-in-use') {
-                          setState(() => formError = 'An account already exists for ${emailController.text}. Please try again with a different email.');
-                        } else if (e.code == 'invalid-email') {
-                          setState(() => formError = 'Please enter a valid email.');
-                        } else if (e.code == 'operation-not-allowed') {
-                          setState(() => formError = 'Not allowed.');
-                        } else if (e.code == 'weak-password') {
-                          setState(() => formError = 'Please enter a stronger password. Try to include letters, numbers, and special characters.');
+                        if (e.code == 'invalid-email') {
+                          setState(() => formError = 'Looks like ${emailController.text} isn\'t a valid email. Please try again with a different email.');
+                        } else if (e.code == 'user-disabled') {
+                          setState(() => formError = 'This account has been disabled. Contact the administrators if you feel there has been an error.');
+                        } else if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+                          setState(() => formError = 'Invalid email/password combination. Double check and try again.');
+                        } else if (e.code == 'too-many-requests') {
+                          setState(() => formError = 'You have made too many requests. Please wait a few minutes before trying again.');
                         } else {
                           setState(() => formError = e.code);
                         }
@@ -128,7 +113,7 @@ class SignupPageState extends State<SignupPage> {
                   child: Container(
                     width: 350,
                     padding: const EdgeInsets.all(10),
-                    child: const Text('Submit',
+                    child: const Text('Log In',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16)
                     ),
@@ -140,10 +125,10 @@ class SignupPageState extends State<SignupPage> {
                   child: Text(formError, style: const TextStyle(color: Colors.red), textAlign: TextAlign.left),
                 ),
                 Row(children: [
-                  const Text('Already have an account?'),
+                  const Text('Don\'t have an account?'),
                   TextButton(
-                    onPressed: () => Navigator.popAndPushNamed(context, '/login'),
-                    child: const Text('Log in',
+                    onPressed: () => Navigator.popAndPushNamed(context, '/signup'),
+                    child: const Text('Create one now!',
                       style: TextStyle(decoration: TextDecoration.underline)
                     )
                   )
@@ -154,10 +139,5 @@ class SignupPageState extends State<SignupPage> {
         )
       )
     );
-  }
-
-  /// Return whether the given string is a valid email.
-  bool isValidEmail(String email) {
-    return RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(email);
   }
 }
