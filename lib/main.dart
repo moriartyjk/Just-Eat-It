@@ -16,6 +16,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  try {
+    UserCredential cred = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: "user@example.com", password: "***");
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
+  }
+
   runApp(const MyApp());
 }
 
@@ -25,28 +36,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const darkGreen = MaterialColor(
-                        0xFF1B5E20,
-                        <int, Color>{
-                          50: Color(0xFF66BB6A),
-                          100: Color(0xFF4CAF50),
-                          200: Color(0xFF43A047),
-                          300: Color(0xFF388E3C),
-                          400: Color(0xFF2E7D32),
-                          500: Color(0xFF1B5E20),
-                          600: Color(0xFF165814),
-                          700: Color(0xFF10500E),
-                          800: Color(0xFF10500E),
-                          900: Color(0xFF10500E),
-                        },
-                      );
+      0xFF1B5E20,
+      <int, Color>{
+        50: Color(0xFF66BB6A),
+        100: Color(0xFF4CAF50),
+        200: Color(0xFF43A047),
+        300: Color(0xFF388E3C),
+        400: Color(0xFF2E7D32),
+        500: Color(0xFF1B5E20),
+        600: Color(0xFF165814),
+        700: Color(0xFF10500E),
+        800: Color(0xFF10500E),
+        900: Color(0xFF10500E),
+      },
+    );
 
     return MaterialApp(
       title: 'Just Eat It',
-      theme: ThemeData( primarySwatch: darkGreen),
+      theme: ThemeData(primarySwatch: darkGreen),
       routes: {
-        '/':            (context) => const MyHomePage(title: 'Just Eat It'),
-        '/signup':      (context) => const SignupPage(),
-        '/login':       (context) => const LoginPage(),
+        '/': (context) => const MyHomePage(title: 'Just Eat It'),
+        '/signup': (context) => const SignupPage(),
+        '/login': (context) => const LoginPage(),
         '/restaurants': (context) => const RestaurantsPage(),
         '/preferences': (context) => const CustomizerPage(),
         '/list':        (context) => const RestaurantListPage(),
@@ -66,7 +77,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   /*
   int _counter = 0;
 
@@ -81,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }*/
 
-    @override
+  @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
