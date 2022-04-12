@@ -52,7 +52,7 @@ class JustEatItAppBarState extends State<JustEatItAppBar> {
                   child: Text('Preferences',
                     style: TextStyle(color: Colors.grey[100], fontSize: 18),
                   ),
-                  onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/preferences', (_) => false)
+                  onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/pref_nav', (_) => false)
                 ),
                 const SizedBox(width: 60),
                 TextButton(

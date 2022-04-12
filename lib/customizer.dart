@@ -43,7 +43,11 @@ class _CustomizerPageState extends State<CustomizerPage> {
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 30),
                     ),
-                    onPressed: () {},
+                    //when pressed, send data and move to reccomendation page
+                    onPressed: () {
+                      //does not update suggestion pool at the moment
+                      Navigator.popAndPushNamed(context, '/restaurants');
+                    },
                     child: FutureBuilder<DocumentSnapshot>(
                       future: cuisine.doc(index.toString()).get(),
                       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {

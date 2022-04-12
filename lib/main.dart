@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/restaurant_list.dart';
 import 'package:justeatit/appbar.dart';
@@ -59,7 +60,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/restaurants': (context) => const RestaurantsPage(),
         '/preferences': (context) => const CustomizerPage(),
-        '/list': (context) => const RestaurantListPage(),
+        '/list':        (context) => const RestaurantListPage(),
+        '/pref_nav':    (context) => const CustomizerNav(),
       },
     );
   }
@@ -122,53 +124,59 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               "Welcome to Just Eat It!",
               style: TextStyle(
-                  fontSize: 40, color: Color.fromARGB(255, 18, 119, 21)),
-            ),
-            TextButton(
-                onPressed: () => {Navigator.pushNamed(context, '/signup')},
-                child: const Text(
-                  "Sign Up",
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 18, 119, 21),
-                  ),
-                )),
-            TextButton(
-                onPressed: () => {Navigator.pushNamed(context, '/login')},
-                child: const Text(
-                  "Log in",
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 18, 119, 21),
-                  ),
-                )),
-            TextButton(
-                onPressed: () => {Navigator.pushNamed(context, '/restaurants')},
-                child: const Text(
-                  "Get Suggestion!",
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 18, 119, 21),
-                  ),
-                )),
-            TextButton(
-                onPressed: () => {Navigator.pushNamed(context, '/list')},
-                child: const Text(
-                  "View Full Restaurant Selection",
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 18, 119, 21),
-                  ),
-                )),
-            TextButton(
-                onPressed: () => {FirebaseAuth.instance.signOut()},
-                child: const Text(
-                  "Log out",
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 18, 119, 21),
-                  ),
-                )),
+                fontSize: 40,
+                color: Color.fromARGB(255, 18, 119, 21)),
+              ),
+            /*TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/signup')
+            }, child: const Text(
+                "Sign Up",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+              )
+              ),*/
+            TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/login')
+            }, child: const Text(
+              "Log in",
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+              )
+              ),
+            /*TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/restaurants')
+            }, child: const Text(
+                "Get Suggestion!",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+              )
+              ),
+             TextButton(onPressed: () => {
+              Navigator.pushNamed(context, '/list')
+            }, child: const Text(
+                "View Full Restaurant Selection",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+                )
+              ),*/
+            TextButton(onPressed: () => {
+              FirebaseAuth.instance.signOut()
+            }, child: const Text(
+                "Log out",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 18, 119, 21),
+                ),
+                )
+              ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
