@@ -5,7 +5,9 @@ import 'appbar.dart';
 
 // The login page.
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final FirebaseAuth auth;
+
+  const LoginPage({Key? key, required this.auth}) : super(key: key);
 
   @override
   LoginPageState createState() {
@@ -44,24 +46,18 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 Divider(color: Colors.grey[300], height: 40),
                 TextFormField(
+                  validator: validateEmail,
                   autofocus: true,
                   autocorrect: false,
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))
                   ),
-                  validator: (email) {
-                    if (email == null || email.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
                 ),
                 const Divider(color: Colors.transparent, height: 30),
                 TextFormField(
+                  validator: validatePassword,
                   obscureText: passwordHidden,
                   enableSuggestions: false,
                   autocorrect: false,
@@ -76,41 +72,10 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))
                   ),
-                  validator: (password) {
-                    if (password == null || password.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    return null;
-                  },
                 ),
                 const Divider(color: Colors.transparent, height: 20),
                 ElevatedButton(
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      try {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        //success:navigate to customize/suggestion page
-                        Navigator.popAndPushNamed(context, '/pref_nav');
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'invalid-email') {
-                          setState(() => formError = 'Looks like ${emailController.text} isn\'t a valid email. Please try again with a different email.');
-                        } else if (e.code == 'user-disabled') {
-                          setState(() => formError = 'This account has been disabled. Contact the administrators if you feel there has been an error.');
-                        } else if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-                          setState(() => formError = 'Invalid email/password combination. Double check and try again.');
-                        } else if (e.code == 'too-many-requests') {
-                          setState(() => formError = 'You have made too many requests. Please wait a few minutes before trying again.');
-                        } else {
-                          setState(() => formError = e.code);
-                        }
-                      } catch(e) {
-                        setState(() => formError = 'An error occurred. Sorry about that.');
-                      }
-                    }
-                  },
+                  onPressed: handleSubmitPress,
                   child: Container(
                     width: 350,
                     padding: const EdgeInsets.all(10),
@@ -125,20 +90,78 @@ class LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.symmetric(horizontal: 0, vertical: (formError.isEmpty ? 0 : 10)),
                   child: Text(formError, style: const TextStyle(color: Colors.red), textAlign: TextAlign.left),
                 ),
-                Row(children: [
-                  const Text('Don\'t have an account?'),
-                  TextButton(
-                    onPressed: () => Navigator.popAndPushNamed(context, '/signup'),
-                    child: const Text('Create one now!',
-                      style: TextStyle(decoration: TextDecoration.underline)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Flexible(child: Text('Don\'t have an account?')),
+                    Flexible(
+                      child: TextButton(
+                        onPressed: () => Navigator.popAndPushNamed(context, '/signup'),
+                        child: const Text('Create one now!',
+                          style: TextStyle(decoration: TextDecoration.underline)
+                        )
+                      ),
                     )
-                  )
-                ])
+                  ]
+                ),
               ],
             ),
           ),
         )
       )
     );
+  }
+
+  /// Ensure that the given email is present. We don't need to actually check that
+  /// it's a valid email because Firebase will do that.
+  String? validateEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return 'Please enter your email';
+    } else {
+      return null;
+    }
+  }
+
+  /// Ensure that the given password is present.
+  String? validatePassword(String? password) {
+   if (password == null || password.isEmpty) {
+      return 'Please enter a password';
+    } else {
+      return null;
+    }
+  }
+
+  /// Check form validation, then try to sign in and redirect to the preferences page.
+  /// If sign in fails, displays an error.
+  void handleSubmitPress() async {
+    if (formKey.currentState!.validate()) {
+      try {
+        await widget.auth.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        Navigator.popAndPushNamed(context, '/pref_nav');
+      } on FirebaseAuthException catch (e) {
+        setState(() => handleFirebaseAuthError(e));
+      }
+    }
+  }
+
+  /// Display an appropriate message for the given error.
+  /// Handles `invalid-email`, `user-disabled`, `user-not-found`, `wrong-password`,
+  /// and `too-many-requests` nicely, and gives a vague message for other errors.
+  void handleFirebaseAuthError(FirebaseAuthException e) {
+    if (e.code == 'invalid-email') {
+      formError = 'Looks like ${emailController.text} isn\'t a valid email. Please try again with a different email.';
+    } else if (e.code == 'user-disabled') {
+      formError = 'This account has been disabled. Contact the administrators if you feel there has been an error.';
+    } else if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+      formError = 'Invalid email/password combination. Double check and try again.';
+    } else if (e.code == 'too-many-requests') {
+      formError = 'You have made too many requests. Please wait a few minutes before trying again.';
+    } else {
+      formError = 'An error occurred (${e.code}). Sorry about that.';
+    }
   }
 }

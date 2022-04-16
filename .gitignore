@@ -47,3 +47,6 @@ app.*.map.json
 
 # Non-shared Firebase stuff
 .firebase/
+
+# Coverage reports
+coverage/

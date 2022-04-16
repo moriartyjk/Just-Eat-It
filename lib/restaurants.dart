@@ -7,7 +7,9 @@ import 'login.dart';
 import 'recommend.dart';
 
 class RestaurantsPage extends StatefulWidget {
-  const RestaurantsPage({ Key? key }) : super(key: key);
+  final FirebaseAuth auth;
+
+  const RestaurantsPage({ Key? key, required this.auth }) : super(key: key);
 
   @override
   State<RestaurantsPage> createState() => _RestaurantsPageState();
@@ -53,9 +55,9 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = widget.auth.currentUser;
     if (user == null) {
-      return const LoginPage();
+      return LoginPage(auth: widget.auth);
     } else {
       final video = SizedBox(
           width: videoWidth,
