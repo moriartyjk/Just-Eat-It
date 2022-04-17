@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -23,62 +24,109 @@ class _CustomizerPageState extends State<CustomizerPage> {
   Widget build(BuildContext context) {
 
     //build globals
+    final user = FirebaseAuth.instance.currentUser;
     
     //reference to the cuisine collection
-    CollectionReference cuisine = FirebaseFirestore.instance.collection("cuisine");
+    //CollectionReference cuisine = FirebaseFirestore.instance.collection("cuisine");
+    //get the document reference for the user currently logged in
+    
+    //TODO: Add check for whether a valid user is signed in before changing preferences
+    //TODO: When user logs out, clear preferences
+    var userPref = FirebaseFirestore.instance.collection('users').doc(user?.uid);
 
     return Scaffold(
       appBar: JustEatItAppBar.create(context),
       //body of list view
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  //color: const Color.fromARGB(255, 18, 119, 21),
-                  height: 150,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 30),
+      body: Center(
+        child: ListView(
+          padding: const EdgeInsets.all(8),
+          children: <Widget>[
+            //----------CHINESE----------
+            Container(
+              alignment: Alignment.center,
+              height: 150,
+              child: TextButton(
+                onPressed: () {
+                  //set user preference
+                  userPref.set({'preferences': 'chinese'});
+                  Navigator.popAndPushNamed(context, '/restaurants');
+                },
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(
+                    fontSize: 30,
+                    color:Color.fromARGB(255, 18, 119, 21), 
                     ),
-                    //when pressed, send data and move to reccomendation page
-                    onPressed: () {
-                      //does not update suggestion pool at the moment
-                      Navigator.popAndPushNamed(context, '/restaurants');
-                    },
-                    child: FutureBuilder<DocumentSnapshot>(
-                      future: cuisine.doc(index.toString()).get(),
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if(snapshot.hasError){
-                          return const Text("Something went wrong");
-                        }
-
-                        if(snapshot.hasData && !snapshot.data!.exists){
-                          return const Text("Document does not exist",);
-                        }
-
-                        if(snapshot.connectionState == ConnectionState.done) {
-                          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                          return Text(
-                            "${data["name"]}", 
-                            style: const TextStyle(
-                              fontSize: 40,
-                              color: Color.fromARGB(255, 18, 119, 21),
-                              ),
-                          );
-                        }
-                        return const Text("loading"); //appears while firestore is retrieving data
-                      },
-                    ), 
-                  ),
-                );
-              },
-              childCount: 4, //adjusts the current length of the list
-              )
-            )
-        ],
+                ),
+                child: const Text(
+                  "Chinese", 
+                ),
+              ),
+            ),
+            //----------JAPANESE----------
+            Container(
+              alignment: Alignment.center,
+              height: 150,
+              child: TextButton(
+                onPressed: () {
+                  //set user preference
+                  userPref.set({'preferences': 'japanese'});
+                  Navigator.popAndPushNamed(context, '/restaurants');
+                },
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(
+                    fontSize: 30,
+                    color:Color.fromARGB(255, 18, 119, 21), 
+                    ),
+                ),
+                child: const Text(
+                  "Japanese", 
+                ),
+              ),
+            ),
+            //----------MEXICAN----------
+            Container(
+              alignment: Alignment.center,
+              height: 150,
+              child: TextButton(
+                onPressed: () {
+                  //set user preference
+                  userPref.set({'preferences': 'mexican'});
+                  Navigator.popAndPushNamed(context, '/restaurants');
+                },
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(
+                    fontSize: 30,
+                    color:Color.fromARGB(255, 18, 119, 21), 
+                    ),
+                ),
+                child: const Text(
+                  "Mexican", 
+                ),
+              ),
+            ),
+            //----------MEDITERANIAN----------
+            Container(
+              alignment: Alignment.center,
+              height: 150,
+              child: TextButton(
+                onPressed: () {
+                  //set user preference
+                  userPref.set({'preferences': 'mediteranian'});
+                  Navigator.popAndPushNamed(context, '/restaurants');
+                },
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(
+                    fontSize: 30,
+                    color:Color.fromARGB(255, 18, 119, 21), 
+                    ),
+                ),
+                child: const Text(
+                  "Mediteranian", 
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

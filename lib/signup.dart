@@ -109,7 +109,7 @@ class SignupPageState extends State<SignupPage> {
                           password: passwordController.text,
                         ).then((value) {
                           //add user to users collection with email field empty preferences field
-                          FirebaseFirestore.instance.collection('users').doc(value.user?.uid).set({'email': value.user?.email,'preferences': "None"});
+                          FirebaseFirestore.instance.collection('users').doc(value.user?.uid).set({'email': value.user?.email,'preferences': ''});
                         });
                         Navigator.popAndPushNamed(context, '/preferences');
                       } on FirebaseAuthException catch (e) {
