@@ -33,6 +33,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
     //TODO: Add check for whether a valid user is signed in before changing preferences
     //TODO: When user logs out, clear preferences
     var userPref = FirebaseFirestore.instance.collection('users').doc(user?.uid);
+    //var restNameList = ['chinese', 'japanese', 'mexican', 'mediteranian'];
 
     return Scaffold(
       appBar: JustEatItAppBar.create(context),
@@ -48,7 +49,9 @@ class _CustomizerPageState extends State<CustomizerPage> {
               child: TextButton(
                 onPressed: () {
                   //set user preference
-                  userPref.set({'preferences': 'chinese'});
+                  var chin = ['chinese']; //needs to be of  List<String> type
+                  userPref.update({'preferences': FieldValue.arrayUnion(chin)});
+                  //userPref.set({'preferences': 'chinese'});
                   Navigator.popAndPushNamed(context, '/restaurants');
                 },
                 style: TextButton.styleFrom(
@@ -69,7 +72,10 @@ class _CustomizerPageState extends State<CustomizerPage> {
               child: TextButton(
                 onPressed: () {
                   //set user preference
-                  userPref.set({'preferences': 'japanese'});
+                  var jap = ['japanese'];
+                  //userPref.
+                  userPref.update({'preferences': FieldValue.arrayUnion(jap)});
+                  //userPref.set({'preferences': 'japanese'});
                   Navigator.popAndPushNamed(context, '/restaurants');
                 },
                 style: TextButton.styleFrom(
@@ -90,7 +96,8 @@ class _CustomizerPageState extends State<CustomizerPage> {
               child: TextButton(
                 onPressed: () {
                   //set user preference
-                  userPref.set({'preferences': 'mexican'});
+                  var mex = ['mexican'];
+                  userPref.update({'preferences': FieldValue.arrayUnion(mex)});
                   Navigator.popAndPushNamed(context, '/restaurants');
                 },
                 style: TextButton.styleFrom(
@@ -111,7 +118,8 @@ class _CustomizerPageState extends State<CustomizerPage> {
               child: TextButton(
                 onPressed: () {
                   //set user preference
-                  userPref.set({'preferences': 'mediteranian'});
+                  var med = ['mediteranian'];
+                  userPref.update({'preferences': FieldValue.arrayUnion(med)});
                   Navigator.popAndPushNamed(context, '/restaurants');
                 },
                 style: TextButton.styleFrom(

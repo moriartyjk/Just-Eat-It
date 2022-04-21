@@ -108,10 +108,10 @@ class SignupPageState extends State<SignupPage> {
                           email: emailController.text,
                           password: passwordController.text,
                         ).then((value) {
-                          //add user to users collection with email field empty preferences field
-                          FirebaseFirestore.instance.collection('users').doc(value.user?.uid).set({'email': value.user?.email,'preferences': ''});
+                          //add user to users collection with email field empty preferences array
+                          FirebaseFirestore.instance.collection('users').doc(value.user?.uid).set({'email': value.user?.email,'preferences': []});
                         });
-                        Navigator.popAndPushNamed(context, '/preferences');
+                        Navigator.popAndPushNamed(context, '/pref_nav'); //direct to customization menu
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'email-already-in-use') {
                           setState(() => formError = 'An account already exists for ${emailController.text}. Please try again with a different email.');
