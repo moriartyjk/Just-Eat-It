@@ -44,26 +44,32 @@ class _CustomizerPageState extends State<CustomizerPage> {
           //==========SELECTION VIEW==========
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(20),
               children: <Widget>[
-                //----------CHINESE----------
-                _buildSelection("Chinese", userPref, context),
-                //----------JAPANESE----------
-                _buildSelection("Japanese", userPref, context),
-                //----------MEXICAN----------
-                _buildSelection("Mexican", userPref, context),
-                //----------MEDITERANIAN----------
-                _buildSelection("Mediteranian", userPref, context),
+                 //----------AMERICAN----------
+                _buildSelection("American", userPref, context),
+                const Divider(),
+                 //----------BEVERAGES----------
+                _buildSelection("Beverages", userPref, context),
+                const Divider(),
                 //----------BREAKFAST----------
                 _buildSelection("Breakfast", userPref, context),
-                //----------BEVERAGES----------
-                _buildSelection("Beverages", userPref, context),
-                //----------AMERICAN----------
-                _buildSelection("American", userPref, context),
+                const Divider(),
+                //----------CHINESE----------
+                _buildSelection("Chinese", userPref, context),
+                const Divider(),
                 //----------HEALTH----------
                 _buildSelection("Health", userPref, context),
-                //----------RESET PREFERENCES----------
-                _clearPreferences(userPref, context),
+                const Divider(),
+                //----------JAPANESE----------
+                _buildSelection("Japanese", userPref, context),
+                const Divider(),
+                 //----------MEDITERANIAN----------
+                _buildSelection("Mediteranian", userPref, context),
+                const Divider(),  
+                //----------MEXICAN----------
+                _buildSelection("Mexican", userPref, context),
+                const Divider(),
               ],
             ),
           ),
@@ -77,6 +83,12 @@ class _CustomizerPageState extends State<CustomizerPage> {
                 child: const Text("No Preferences Selected"),
               ),
           ),
+          //----------RESET PREFERENCES----------
+          Container(
+            alignment: Alignment.bottomRight,
+            padding: const EdgeInsets.all(20),
+            child: _clearPreferences(userPref, context),
+          )
         ], //end of Row children
       ),
     );
@@ -98,7 +110,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
         semanticLabel: alreadySaved ? 'Remove from Selected' : 'Select',
       ),
       title: Text(
-        name,
+        name, //name of restaurant
         style: TextStyle(
           color: Colors.green.shade800,
           fontSize: 30,
@@ -109,12 +121,8 @@ class _CustomizerPageState extends State<CustomizerPage> {
         setState(() {
           if(alreadySaved){
             _saved.remove(name);
-            //add code here to update the users preference list in data base based on current _saved array
-            //userPref.update({'preferences': _saved});
           } else{
             _saved.add(name);
-            //add code here to update the users preference list in data base based on current _saved array
-            //userPref.update({'preferences': _saved});
           }
           userPref.update({'preferences': _saved});
         });
@@ -127,6 +135,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
 
     //return a buildable list that displays what has been favorited by the user
     return ListView.separated(
+      padding: const EdgeInsets.all(15),
       separatorBuilder: (context, index) => Divider(color: Colors.green.shade900),
       itemCount: _saved.length, //number of tiles equals length of preferences list
       itemBuilder: (context, int index) {
@@ -140,35 +149,20 @@ class _CustomizerPageState extends State<CustomizerPage> {
   //Clear preferences
   Widget _clearPreferences(DocumentReference<Map<String, dynamic>> userPref, BuildContext context){
 
-    //maybe turn this into a floating button
-
-    return Container(
-      alignment: Alignment.center,
-      height: 200,
-      child: ElevatedButton(
-        onPressed: () {
-          setState(() {
-            //clear _saved
-            removeAll();
-            userPref.update({'preferences': []}); //set preferences to be an empty array
-          });
-          //clear _saved
+    return FloatingActionButton(
+      child: const Icon(
+        Icons.refresh,
+      ),
+      onPressed: () {
+        setState(() {
           removeAll();
           userPref.update({'preferences': []}); //set preferences to be an empty array
-        },
-        style: ElevatedButton.styleFrom(
-          textStyle: const TextStyle(
-            fontSize: 30,
-            color:Color.fromARGB(255, 18, 119, 21), 
-            ),
-        ),
-        child: const Text(
-          "Reset Preferences",
-        ),
-      ),
+        });
+      }
     );
   }
 
+  //helper method that removes all 
   void removeAll(){
     while(_saved.isNotEmpty){
       _saved.removeAt(0); //remove the first index of the list until its empty
