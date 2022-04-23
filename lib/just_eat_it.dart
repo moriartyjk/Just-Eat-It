@@ -46,7 +46,7 @@ class JustEatIt extends StatelessWidget {
       theme: ThemeData(primarySwatch: darkGreen),
       routes: {
         '/': (context) => const MyHomePage(title: 'Just Eat It'),
-        '/signup': (context) => const SignupPage(),
+        '/signup': (context) => SignupPage(auth: auth, store: store),
         '/login': (context) => LoginPage(auth: auth),
         '/restaurants': (context) => RestaurantsPage(auth: auth),
         '/preferences': (context) => const CustomizerPage(),

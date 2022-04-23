@@ -5,25 +5,27 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:justeatit/custom_nav.dart';
+import 'package:justeatit/customizer.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
 import 'package:justeatit/signup.dart';
 
 import 'helpers.dart';
 
-class LoginPageWrapper extends StatelessWidget {
+class SignupPageWrapper extends StatelessWidget {
   final FirebaseAuth auth;
   final FirebaseFirestore store = FakeFirebaseFirestore();
 
-  LoginPageWrapper({Key? key, required this.auth}) : super(key: key);
+  SignupPageWrapper({Key? key, required this.auth}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(auth: auth),
+      home: SignupPage(auth: auth, store: store),
       routes: {
         '/pref_nav': (context) => const CustomizerNav(),
-        '/signup': (context) => SignupPage(auth: auth, store: store),
+        '/login': (context) => LoginPage(auth: auth),
+        '/preferences': (context) => const CustomizerPage(),
       },
     );
   }
@@ -35,42 +37,42 @@ void main() {
     await JustEatIt.initFirebase();
   });
 
-  testWidgets('Login page has correct elements', (tester) async {
+  testWidgets('Signup page has correct elements', (tester) async {
     setDisplayDimensions(tester);
-    await tester.pumpWidget(LoginPageWrapper(auth: MockFirebaseAuth()));
-    expect(find.text('Log In'), findsWidgets);
+    await tester.pumpWidget(SignupPageWrapper(auth: MockFirebaseAuth()));
+    expect(find.text('Sign Up'), findsWidgets);
     expect(find.text('Email'), findsWidgets);
     expect(find.text('Password'), findsWidgets);
-    expect(find.text('Create one now!'), findsWidgets);
+    expect(find.text('Already have an account?'), findsWidgets);
   });
 
   testWidgets('Gives errors on bad inputs', (tester) async {
     setDisplayDimensions(tester);
     var auth = MockFirebaseAuth(
       authExceptions: AuthExceptions(
-        signInWithEmailAndPassword: FirebaseAuthException(code: 'invalid-email')
+        createUserWithEmailAndPassword: FirebaseAuthException(code: 'email-already-in-use')
       )
     );
-    await tester.pumpWidget(LoginPageWrapper(auth: auth));
+    await tester.pumpWidget(SignupPageWrapper(auth: auth));
     await tester.enterText(find.byType(TextField).first, '');
     await tester.enterText(find.byType(TextField).last, '');
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Log In'));
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Submit'));
     await tester.pump();
-    expect(find.text('Please enter your email'), findsOneWidget);
+    expect(find.text('Please enter a valid email'), findsOneWidget);
     expect(find.text('Please enter a password'), findsOneWidget);
     expect(auth.currentUser, isNull);
 
-    await tester.enterText(find.byType(TextField).first, 'bad');
-    await tester.enterText(find.byType(TextField).last, '123');
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Log In'));
+    await tester.enterText(find.byType(TextField).first, 'mickey@yankees.com');
+    await tester.enterText(find.byType(TextField).last, 'test1234');
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Submit'));
     await tester.pump();
-    expect(find.textContaining('isn\'t a valid email'), findsOneWidget);
+    expect(find.textContaining('account already exists'), findsOneWidget);
     expect(auth.currentUser, isNull);
   });
 
   testWidgets('Show/hide password works', (tester) async {
     setDisplayDimensions(tester);
-    await tester.pumpWidget(LoginPageWrapper(auth: MockFirebaseAuth()));
+    await tester.pumpWidget(SignupPageWrapper(auth: MockFirebaseAuth()));
     final passwordFinder = find.byType(TextField).last;
     await tester.enterText(passwordFinder, 'test1234');
     await tester.tap(find.byIcon(Icons.visibility_off_outlined));
@@ -83,25 +85,22 @@ void main() {
 
    testWidgets('Succeeds if inputs are valid', (tester) async {
     setDisplayDimensions(tester);
-    final auth = MockFirebaseAuth(
-      mockUser: MockUser(email: 'test@gmu.edu'),
-      signedIn: false,
-    );
-    await tester.pumpWidget(LoginPageWrapper(auth: auth));
-    await tester.enterText(find.byType(TextField).first, 'test@gmu.edu');
-    await tester.enterText(find.byType(TextField).last, '123');
+    final auth = MockFirebaseAuth();
+    await tester.pumpWidget(SignupPageWrapper(auth: auth));
+    await tester.enterText(find.byType(TextField).first, 'yogi@yankees.com');
+    await tester.enterText(find.byType(TextField).last, 'test1234');
     expect(auth.currentUser, isNull);
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Log In'));
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Submit'));
     await tester.pump();
     expect(auth.currentUser, isNotNull);
-    expect(auth.currentUser!.email, equals('test@gmu.edu'));
+    expect(auth.currentUser!.email, equals('yogi@yankees.com'));
   });
 
-  testWidgets('Can switch to signup page', (tester) async {
+  testWidgets('Can switch to login page', (tester) async {
     setDisplayDimensions(tester);
-    await tester.pumpWidget(LoginPageWrapper(auth: MockFirebaseAuth()));
-    await tester.tap(find.widgetWithText(TextButton, 'Create one now!'));
+    await tester.pumpWidget(SignupPageWrapper(auth: MockFirebaseAuth()));
+    await tester.tap(find.widgetWithText(TextButton, 'Log in'));
     await tester.pump();
-    expect(find.textContaining('Sign Up'), findsWidgets);
+    expect(find.textContaining('Log In'), findsWidgets);
   });
 }
