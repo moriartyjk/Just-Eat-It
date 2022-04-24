@@ -152,7 +152,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                     ]),
                     Row(children: [
                       const Icon(Icons.access_time),
-                      Text(recommended!.hours[DateTime.now().weekday]),
+                      Text(recommended!.hours[DateTime.now().weekday-1]), //subtract 1 to align with database array
                     ]),
                   ],
                 ),
