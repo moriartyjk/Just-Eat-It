@@ -17,6 +17,8 @@ class _CustomizerPageState extends State<CustomizerPage> {
   //class globals
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  final _saved = <String> []; //list of selected preferences 
+
   //helping functions
 
 //build layout
@@ -31,104 +33,141 @@ class _CustomizerPageState extends State<CustomizerPage> {
     //get the document reference for the user currently logged in
     
     //TODO: Add check for whether a valid user is signed in before changing preferences
-    //TODO: When user logs out, clear preferences
     var userPref = FirebaseFirestore.instance.collection('users').doc(user?.uid);
 
     return Scaffold(
       appBar: JustEatItAppBar.create(context),
       //body of list view
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          children: <Widget>[
-            //----------CHINESE----------
-            Container(
-              alignment: Alignment.center,
-              height: 150,
-              child: TextButton(
-                onPressed: () {
-                  //set user preference
-                  userPref.set({'preferences': 'chinese'});
-                  Navigator.popAndPushNamed(context, '/restaurants');
-                },
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(
-                    fontSize: 30,
-                    color:Color.fromARGB(255, 18, 119, 21), 
-                    ),
-                ),
-                child: const Text(
-                  "Chinese", 
-                ),
-              ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          //==========SELECTION VIEW==========
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: <Widget>[
+                 //----------AMERICAN----------
+                _buildSelection("American", userPref, context),
+                const Divider(),
+                 //----------BEVERAGES----------
+                _buildSelection("Beverages", userPref, context),
+                const Divider(),
+                //----------BREAKFAST----------
+                _buildSelection("Breakfast", userPref, context),
+                const Divider(),
+                //----------CHINESE----------
+                _buildSelection("Chinese", userPref, context),
+                const Divider(),
+                //----------HEALTH----------
+                _buildSelection("Health", userPref, context),
+                const Divider(),
+                //----------JAPANESE----------
+                _buildSelection("Japanese", userPref, context),
+                const Divider(),
+                 //----------MEDITERANIAN----------
+                _buildSelection("Mediteranian", userPref, context),
+                const Divider(),  
+                //----------MEXICAN----------
+                _buildSelection("Mexican", userPref, context),
+                const Divider(),
+              ],
             ),
-            //----------JAPANESE----------
-            Container(
-              alignment: Alignment.center,
-              height: 150,
-              child: TextButton(
-                onPressed: () {
-                  //set user preference
-                  userPref.set({'preferences': 'japanese'});
-                  Navigator.popAndPushNamed(context, '/restaurants');
-                },
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(
-                    fontSize: 30,
-                    color:Color.fromARGB(255, 18, 119, 21), 
-                    ),
-                ),
-                child: const Text(
-                  "Japanese", 
-                ),
+          ),
+          //==========SELECTED PREFERENCES VIEW==========
+          Expanded(
+            child: _saved.isNotEmpty //if preferences list is not empty, create a listveiw builder otherwise, show text
+              ? _buildSelected(context) 
+              : Container(
+                alignment: Alignment.center,
+                height: 150,
+                child: const Text("No Preferences Selected"),
               ),
-            ),
-            //----------MEXICAN----------
-            Container(
-              alignment: Alignment.center,
-              height: 150,
-              child: TextButton(
-                onPressed: () {
-                  //set user preference
-                  userPref.set({'preferences': 'mexican'});
-                  Navigator.popAndPushNamed(context, '/restaurants');
-                },
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(
-                    fontSize: 30,
-                    color:Color.fromARGB(255, 18, 119, 21), 
-                    ),
-                ),
-                child: const Text(
-                  "Mexican", 
-                ),
-              ),
-            ),
-            //----------MEDITERANIAN----------
-            Container(
-              alignment: Alignment.center,
-              height: 150,
-              child: TextButton(
-                onPressed: () {
-                  //set user preference
-                  userPref.set({'preferences': 'mediteranian'});
-                  Navigator.popAndPushNamed(context, '/restaurants');
-                },
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(
-                    fontSize: 30,
-                    color:Color.fromARGB(255, 18, 119, 21), 
-                    ),
-                ),
-                child: const Text(
-                  "Mediteranian", 
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          //----------RESET PREFERENCES----------
+          Container(
+            alignment: Alignment.bottomRight,
+            padding: const EdgeInsets.all(20),
+            child: _clearPreferences(userPref, context),
+          )
+        ], //end of Row children
       ),
     );
   }
 
-}//class end
+/*----------HELPER FUNCTIONS----------*/
+
+  //Helper method to build each 
+  Widget _buildSelection(String name,  DocumentReference<Map<String, dynamic>> userPref, BuildContext context){
+
+    final alreadySaved = _saved.contains(name);
+
+    //name -> restaurant name in upper case
+    return ListTile(
+      minVerticalPadding: 20,
+      leading: Icon(
+        alreadySaved ? Icons.circle : Icons.circle_outlined,
+        color: Colors.amber.shade800,
+        semanticLabel: alreadySaved ? 'Remove from Selected' : 'Select',
+      ),
+      title: Text(
+        name, //name of restaurant
+        style: TextStyle(
+          color: Colors.green.shade800,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          if(alreadySaved){
+            _saved.remove(name);
+          } else{
+            _saved.add(name);
+          }
+          userPref.update({'preferences': _saved});
+        });
+      },
+    );
+  }
+
+  //Widget that shows what has been selected
+  Widget _buildSelected(BuildContext context){
+
+    //return a buildable list that displays what has been favorited by the user
+    return ListView.separated(
+      padding: const EdgeInsets.all(15),
+      separatorBuilder: (context, index) => Divider(color: Colors.green.shade900),
+      itemCount: _saved.length, //number of tiles equals length of preferences list
+      itemBuilder: (context, int index) {
+        return ListTile(
+          title: Text(_saved.elementAt(index)),
+        );
+      }
+    );
+  }
+
+  //Clear preferences
+  Widget _clearPreferences(DocumentReference<Map<String, dynamic>> userPref, BuildContext context){
+
+    return FloatingActionButton(
+      child: const Icon(
+        Icons.refresh,
+      ),
+      onPressed: () {
+        setState(() {
+          removeAll();
+          userPref.update({'preferences': []}); //set preferences to be an empty array
+        });
+      }
+    );
+  }
+
+  //helper method that removes all 
+  void removeAll(){
+    while(_saved.isNotEmpty){
+      _saved.removeAt(0); //remove the first index of the list until its empty
+    }
+  }
+
+} //==========CustomizerPage END==========
+
