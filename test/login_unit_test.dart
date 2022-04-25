@@ -8,7 +8,6 @@ void main() {
     expect(state.validateEmail(null), equals('Please enter your email'));
     expect(state.validateEmail(''), equals('Please enter your email'));
     expect(state.validateEmail('jeter@example.com'), isNull);
-
   });
 
   test('LoginPageState#validatePassword checks for empty passwords', () {
