@@ -3,6 +3,17 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+class RestaurantFormatError implements Exception {
+  DocumentSnapshot? doc;
+  String message;
+  RestaurantFormatError(this.message, [this.doc]);
+
+  @override
+  String toString() {
+    return "$runtimeType: $message (restaurants/${doc?.id})";
+  }
+}
+
 /// Stores the data of a recommended restaurant.
 class Restaurant {
   /// The name of the restaurant
@@ -23,22 +34,24 @@ class Restaurant {
   /// Create a new restaurant from the given Firestore record. This handles all the
   /// necessary `dynamic` -> `String` or `dynamic` ->` List<String>` conversions and throws
   /// exceptions if unable to convert.
-  static Restaurant fromRecord(QueryDocumentSnapshot<Map<String, dynamic>> record) {
-    var data = record.data();
-    // default description value, since this isn't yet provided
-    data['description'] = 'Craving a warm, steaming burrito? Or crunchy chips topped with cold guacamole? Chipotle is the go-to spot on campus for mexican food. With four different kinds of meat and dozens of options, Chipotle is certain to have something for everyone, even if you\'re vegan, or gluten free! But be sure to come a few minutes early, there\'s always a line.';
+  static Restaurant fromRecord(DocumentSnapshot<Map<String, dynamic>> doc) {
+    var data = doc.data();
+
+    if (data == null) {
+      throw RestaurantFormatError('unable to fetch restaurant', doc);
+    }
 
     // runtime type checks
     if (data['name'] is! String) {
-      throw Exception('invalid name for restaurants/${record.id}');
+      throw RestaurantFormatError('invalid name', doc);
     } else if (data['location'] is! String) {
-      throw Exception('invalid location for restaurants/${record.id}');
+      throw RestaurantFormatError('invalid location', doc);
     } else if (data['description'] is! String) {
-      throw Exception('invalid description for restaurants/${record.id}');
+      throw RestaurantFormatError('invalid description', doc);
     } else if (data['hours'] is! List) {
-      throw Exception('invalid hours for restaurants/${record.id}');
+      throw RestaurantFormatError('invalid hours', doc);
     } else if (data['dietary'] is! List) {
-      throw Exception('invalid dietary for restaurants/${record.id}');
+      throw RestaurantFormatError('invalid dietary restrictions', doc);
     }
 
     return Restaurant(data['name'],
@@ -90,7 +103,6 @@ class RestaurantRecommender {
   /// Actually recommend a restaurant.
   Restaurant recommend() {
     var random = Random(DateTime.now().millisecondsSinceEpoch).nextInt(restaurants.length);
-    random = 0;
     return Restaurant.fromRecord(restaurants[random]);
   }
 }
