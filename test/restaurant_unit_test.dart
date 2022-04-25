@@ -20,6 +20,7 @@ void main() {
           'location': '123 Main Street',
           'hours': ['10 AM - 10 PM'],
           'dietary': [],
+          'cuisine': 'Mexican',
           'description': 'Mexican food.'
         }),
         restaurant = Restaurant.fromRecord(doc);
@@ -34,11 +35,13 @@ void main() {
 
   test('Restaurant.fromRecord checks type errors', () async {
     var doc1 = await addRestaurant(FakeFirebaseFirestore(), {}),
-        doc2 = await addRestaurant(FakeFirebaseFirestore(), { 'name': null, 'location': '123', 'hours': [], 'dietary': [], 'description': 'hi' }),
-        doc3 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': null, 'hours': [], 'dietary': [], 'description': 'hi' }),
-        doc4 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': null, 'dietary': [], 'description': 'hi' }),
-        doc5 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': [], 'dietary': null, 'description': 'hi' }),
-        doc6 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': [], 'dietary': [], 'description': null });
+        doc2 = await addRestaurant(FakeFirebaseFirestore(), { 'name': null, 'location': '123', 'hours': [], 'dietary': [], 'description': 'hi', 'cuisine': 'Mexican' }),
+        doc3 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': null, 'hours': [], 'dietary': [], 'description': 'hi', 'cuisine': 'Mexican' }),
+        doc4 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': null, 'dietary': [], 'description': 'hi', 'cuisine': 'Mexican' }),
+        doc5 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': [], 'dietary': null, 'description': 'hi', 'cuisine': 'Mexican' }),
+        doc6 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': [], 'dietary': [], 'description': null, 'cuisine': 'Mexican' }),
+        doc7 = await addRestaurant(FakeFirebaseFirestore(), { 'name': 'abc', 'location': '123', 'hours': [], 'dietary': [], 'description': 'hi', 'cuisine': null });
+
 
     expect(() => Restaurant.fromRecord(doc1), throwsRestaurantFormatError('unable to fetch'));
     expect(() => Restaurant.fromRecord(doc2), throwsRestaurantFormatError('invalid name'));
@@ -46,5 +49,6 @@ void main() {
     expect(() => Restaurant.fromRecord(doc4), throwsRestaurantFormatError('invalid hours'));
     expect(() => Restaurant.fromRecord(doc5), throwsRestaurantFormatError('invalid dietary'));
     expect(() => Restaurant.fromRecord(doc6), throwsRestaurantFormatError('invalid description'));
+    expect(() => Restaurant.fromRecord(doc7), throwsRestaurantFormatError('invalid cuisine'));
   });
 }

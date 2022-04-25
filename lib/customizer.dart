@@ -6,6 +6,20 @@ import 'appbar.dart';
 
 //Globals
 
+/// a wrapper class to hold all the cuisine values
+class Cuisines {
+  static const american = 'American';
+  static const beverages = 'Beverages';
+  static const breakfast = 'Breakfast';
+  static const chinese = 'Chinese';
+  static const health = 'Health';
+  static const japanese = 'Japanese';
+  static const mediterranean = 'Mediterranean';
+  static const mexican = 'Mexican';
+
+  static const all = [american, beverages, breakfast, chinese, health, japanese, mediterranean, mexican];
+}
+
 class CustomizerPage extends StatefulWidget {
   const CustomizerPage({ Key? key }) : super(key: key);
 
@@ -17,7 +31,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
   //class globals
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final _saved = <String> []; //list of selected preferences 
+  final _saved = <String> []; //list of selected preferences
 
   //helping functions
 
@@ -27,11 +41,11 @@ class _CustomizerPageState extends State<CustomizerPage> {
 
     //build globals
     final user = FirebaseAuth.instance.currentUser;
-    
+
     //reference to the cuisine collection
     //CollectionReference cuisine = FirebaseFirestore.instance.collection("cuisine");
     //get the document reference for the user currently logged in
-    
+
     //TODO: Add check for whether a valid user is signed in before changing preferences
     var userPref = FirebaseFirestore.instance.collection('users').doc(user?.uid);
 
@@ -47,28 +61,28 @@ class _CustomizerPageState extends State<CustomizerPage> {
               padding: const EdgeInsets.all(20),
               children: <Widget>[
                  //----------AMERICAN----------
-                _buildSelection("American", userPref, context),
+                _buildSelection(Cuisines.american, userPref, context),
                 const Divider(),
                  //----------BEVERAGES----------
-                _buildSelection("Beverages", userPref, context),
+                _buildSelection(Cuisines.beverages, userPref, context),
                 const Divider(),
-                //----------BREAKFAST----------
-                _buildSelection("Breakfast", userPref, context),
+                 //----------BREAKFAST----------
+                _buildSelection(Cuisines.breakfast, userPref, context),
                 const Divider(),
                 //----------CHINESE----------
-                _buildSelection("Chinese", userPref, context),
+                _buildSelection(Cuisines.chinese, userPref, context),
                 const Divider(),
                 //----------HEALTH----------
-                _buildSelection("Health", userPref, context),
+                _buildSelection(Cuisines.health, userPref, context),
                 const Divider(),
                 //----------JAPANESE----------
-                _buildSelection("Japanese", userPref, context),
+                _buildSelection(Cuisines.japanese, userPref, context),
                 const Divider(),
                  //----------MEDITERANIAN----------
-                _buildSelection("Mediteranian", userPref, context),
-                const Divider(),  
+                _buildSelection(Cuisines.mediterranean, userPref, context),
+                const Divider(),
                 //----------MEXICAN----------
-                _buildSelection("Mexican", userPref, context),
+                _buildSelection(Cuisines.mexican, userPref, context),
                 const Divider(),
               ],
             ),
@@ -76,7 +90,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
           //==========SELECTED PREFERENCES VIEW==========
           Expanded(
             child: _saved.isNotEmpty //if preferences list is not empty, create a listveiw builder otherwise, show text
-              ? _buildSelected(context) 
+              ? _buildSelected(context)
               : Container(
                 alignment: Alignment.center,
                 height: 150,
@@ -96,7 +110,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
 
 /*----------HELPER FUNCTIONS----------*/
 
-  //Helper method to build each 
+  //Helper method to build each
   Widget _buildSelection(String name,  DocumentReference<Map<String, dynamic>> userPref, BuildContext context){
 
     final alreadySaved = _saved.contains(name);
@@ -162,7 +176,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
     );
   }
 
-  //helper method that removes all 
+  //helper method that removes all
   void removeAll(){
     while(_saved.isNotEmpty){
       _saved.removeAt(0); //remove the first index of the list until its empty

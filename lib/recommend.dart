@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:justeatit/customizer.dart';
 
 class RestaurantFormatError implements Exception {
   DocumentSnapshot? doc;
@@ -18,7 +19,7 @@ class RestaurantFormatError implements Exception {
 class Restaurant {
   /// The name of the restaurant
   String name;
-  /// A few sentences describing the restaurant. TODO.
+  /// A few sentences describing the restaurant.
   String description;
   /// The location of the restaurant, i.e. Johnson Center.
   String location;
@@ -52,6 +53,8 @@ class Restaurant {
       throw RestaurantFormatError('invalid hours', doc);
     } else if (data['dietary'] is! List) {
       throw RestaurantFormatError('invalid dietary restrictions', doc);
+    } else if (!Cuisines.all.contains(data['cuisine'])) {
+      throw RestaurantFormatError('invalid cuisine ${data['cuisine']}', doc);
     }
 
     return Restaurant(data['name'],
@@ -66,43 +69,48 @@ class Restaurant {
 /// history, preferences, and a list of qualifying restaurants. A lot of the
 /// calculations are actually done at init time, inside `forUser`.
 class RestaurantRecommender {
-  /// The user's preferences
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> preferences;
-  /// The user's restaurant history
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> history;
   /// A list of possible restaurants that could be recommended to the user.
   /// This could be all restaurants, but will usually be filtered by dietary
   /// or culinary preferences.
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> restaurants;
+  List<Restaurant> restaurants;
+
   /// A list of all past recommendations. This is used to ensure that a restaurant
   /// isn't re-recommended when trying again.
   List<Restaurant> recommendations = [];
 
+  /// A random number generator
+  Random random = Random(DateTime.now().millisecondsSinceEpoch);
+
   /// Initialize a `RestaurantRecommender` with the given data.
-  RestaurantRecommender(this.preferences, this.history, this.restaurants);
+  RestaurantRecommender(this.restaurants);
 
   /// Initialize a `RestaurantRecommender`, fetching the data for the given user.
   /// This should fail if the given user is not currently logged in.
-  static Future<RestaurantRecommender> forUser(User user) async {
-    var firestore = FirebaseFirestore.instance;
-    var preferencesFuture = firestore.collection('preferences')
-                                     .where('user', isEqualTo: user.uid)
-                                     .get();
-    var historyFuture = firestore.collection('history')
-                                 .where('user', isEqualTo: user.uid)
+  static Future<RestaurantRecommender> forUser(FirebaseFirestore store, User user) async {
+    var userData = await store.collection('users').doc(user.uid).get();
+    var preferences = await userData.get('preferences');
+    if (preferences == null || preferences == []) {
+      preferences = Cuisines.all;
+    }
+    var restaurants = await store.collection('restaurants')
+                                 .where('cuisine', whereIn: preferences)
                                  .get();
-    // separating xFuture from x allows us to load them faster
-    var preferences = await preferencesFuture;
-    var history = await historyFuture;
-    var restaurantsFuture = firestore.collection('restaurants')
-                                     .get(); // todo check preferences and history
 
-    return RestaurantRecommender(preferences.docs, history.docs, (await restaurantsFuture).docs);
+    return RestaurantRecommender(restaurants.docs.map(Restaurant.fromRecord).toList());
   }
 
   /// Actually recommend a restaurant.
   Restaurant recommend() {
-    var random = Random(DateTime.now().millisecondsSinceEpoch).nextInt(restaurants.length);
-    return Restaurant.fromRecord(restaurants[random]);
+    var unrecommended = restaurants.where((rest) => !recommendations.contains(rest));
+    if (unrecommended.isEmpty) {
+      // we've already recommended everything, so just restart
+      recommendations.clear();
+      unrecommended = restaurants;
+    }
+
+    /// choose a random unrecommended restaurant
+    var choice = unrecommended.elementAt(random.nextInt(unrecommended.length));
+    recommendations.add(choice);
+    return choice;
   }
 }
