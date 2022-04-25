@@ -48,7 +48,7 @@ class JustEatIt extends StatelessWidget {
         '/': (context) => const MyHomePage(title: 'Just Eat It'),
         '/signup': (context) => SignupPage(auth: auth, store: store),
         '/login': (context) => LoginPage(auth: auth),
-        '/restaurants': (context) => RestaurantsPage(auth: auth),
+        '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/preferences': (context) => const CustomizerPage(),
         '/list':        (context) => const RestaurantListPage(),
         '/pref_nav':    (context) => const CustomizerNav(),
