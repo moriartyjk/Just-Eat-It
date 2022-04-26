@@ -89,13 +89,12 @@ class RestaurantRecommender {
   static Future<RestaurantRecommender> forUser(FirebaseFirestore store, User user) async {
     var userData = await store.collection('users').doc(user.uid).get();
     var preferences = await userData.get('preferences');
-    if (preferences == null || preferences == []) {
+    if (preferences == null || (preferences is List && preferences.isEmpty)) {
       preferences = Cuisines.all;
     }
     var restaurants = await store.collection('restaurants')
                                  .where('cuisine', whereIn: preferences)
                                  .get();
-
     return RestaurantRecommender(restaurants.docs.map(Restaurant.fromRecord).toList());
   }
 
