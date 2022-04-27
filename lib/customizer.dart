@@ -10,13 +10,14 @@ import 'appbar.dart';
 class Cuisines {
   static const american = 'American';
   static const beverages = 'Beverages';
+  static const breakfast = 'Breakfast';
   static const chinese = 'Chinese';
   static const health = 'Health';
   static const japanese = 'Japanese';
   static const mediterranean = 'Mediterranean';
   static const mexican = 'Mexican';
 
-  static const all = [american, beverages, chinese, health, japanese, mediterranean, mexican];
+  static const all = [american, beverages, breakfast, chinese, health, japanese, mediterranean, mexican];
 }
 
 class CustomizerPage extends StatefulWidget {
@@ -64,6 +65,9 @@ class _CustomizerPageState extends State<CustomizerPage> {
                 const Divider(),
                  //----------BEVERAGES----------
                 _buildSelection(Cuisines.beverages, userPref, context),
+                const Divider(),
+                 //----------BREAKFAST----------
+                _buildSelection(Cuisines.breakfast, userPref, context),
                 const Divider(),
                 //----------CHINESE----------
                 _buildSelection(Cuisines.chinese, userPref, context),

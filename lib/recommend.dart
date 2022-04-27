@@ -53,6 +53,8 @@ class Restaurant {
       throw RestaurantFormatError('invalid hours', doc);
     } else if (data['dietary'] is! List) {
       throw RestaurantFormatError('invalid dietary restrictions', doc);
+    } else if (!Cuisines.all.contains(data['cuisine'])) {
+      throw RestaurantFormatError('invalid cuisine ${data['cuisine']}', doc);
     }
 
     return Restaurant(data['name'],
@@ -87,7 +89,7 @@ class RestaurantRecommender {
   static Future<RestaurantRecommender> forUser(FirebaseFirestore store, User user) async {
     var userData = await store.collection('users').doc(user.uid).get();
     var preferences = await userData.get('preferences');
-    if (preferences == null || preferences == []) {
+    if (preferences == null || (preferences is List && preferences.isEmpty)) {
       preferences = Cuisines.all;
     }
     var restaurants = await store.collection('restaurants')
