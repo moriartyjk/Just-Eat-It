@@ -95,6 +95,7 @@ class RestaurantRecommender {
     var restaurants = await store.collection('restaurants')
                                  .where('cuisine', whereIn: preferences)
                                  .get();
+
     return RestaurantRecommender(restaurants.docs.map(Restaurant.fromRecord).toList());
   }
 

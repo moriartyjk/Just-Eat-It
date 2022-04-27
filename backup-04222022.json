@@ -1,0 +1,470 @@
+{
+    "restaurants": [
+        {
+            "description": "Craving a warm, steaming burrito? Or crunchy chips topped with cold guacamole? Chipotle is the go-to spot on campus formexican food. With four different kinds of meat and dozens of options, Chipotle is certain to have something for everyone, even if you'revegan, or gluten free! But be sure to come a few minutes early, there's always a line.",
+            "dietary": [
+                "gluten-free option",
+                "veganoption"
+            ],
+            "name": "Chipotle",
+            "cuisine": "mexican",
+            "hours": [
+                "10:45 AM - 10:00 PM",
+                "10:45 AM - 10:00 PM",
+                "10:45 AM - 10:00 PM",
+                "10:45 AM - 10:00PM",
+                "10:45 AM - 10:00 PM",
+                "10:45 AM - 10:00 PM",
+                "10:45 AM - 10:00 PM"
+            ],
+            "location": "Johnson Center"
+        },
+        {
+            "location": "Northern Neck",
+            "description": "For many coffee-lovers, there's only one place to get the perfect drink. Starbucks offers anincredibly selection of warm beverages, including caffine-free, so you'll be sure to find something you love. There are also fresh pastriesavailable, make sure to grab one with your drink.",
+            "hours": [
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00PM",
+                "7:00 AM - 9:00 PM",
+                "9:00 AM - 9:00 PM",
+                "9:00 AM - 9:00 PM"
+            ],
+            "name": "Starbucks",
+            "cuisine": "beverages",
+            "dietary": [
+                "dairy-freeoption",
+                "gluten-free option",
+                "vegan option"
+            ]
+        },
+        {
+            "dietary": [
+                "vegan option",
+                "gluten-free option",
+                "dairy-free option"
+            ],
+            "hours": [
+                "11 AM - 8 PM",
+                "11 AM - 8 PM",
+                "11 AM - 8 PM",
+                "11 AM - 8 PM",
+                "11AM - 5 PM",
+                "Closed",
+                "Closed"
+            ],
+            "name": "Freshens",
+            "location": "Johnson Center",
+            "description": "We all know someone who swears by Freshens' chillysmoothies. In fact, Freshens uses about one and a half million pounds of fruit every year! But did you know that they also offer burritos,tacos, and sandwiches? It's the perfect way to end a hard workout, even if you have dietary restrictions."
+        },
+        {
+            "name": "Garbanzo Mediterranean Grill",
+            "description": "The ancient Greek and Romans built great civilizations besides the Mediterranean Sea, soit stands to reason that the cuisine should be equally great. Garbanzo Mediterranean Grill offers a delicious spread of rice bowls, salads,gyros, and drinks! How about one of their stuffed Pita rolls, with some hummus on the side? Just don't let Gale hear aboutit...",
+            "hours": [
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00PM",
+                "Closed",
+                "Closed"
+            ],
+            "dietary": [
+                "gluten-free-option",
+                "dairy-free-option",
+                "vegan option"
+            ],
+            "location": "Johnson Center"
+        },
+        {
+            "location": "University Mall",
+            "hours": [
+                "5:30 AM - 12:00 AM",
+                "5:30 AM - 1:00 AM",
+                "5:30 AM - 1:00 AM",
+                "5:30 AM - 1:00 AM",
+                "5:30 AM - 1:00AM",
+                "5:30 AM - 1:00 AM",
+                "6:00 AM - 12:00 AM"
+            ],
+            "dietary": [
+                ""
+            ],
+            "description": "If you know someone who hasn't yet had a McDonald's burger, letthem know that they're missing out a classic part of American cuisine! Cheap and fast, McDonald's is the place to go when you need get thosecalories in a hurry. Stays open until midnight.",
+            "name": "McDonalds"
+        },
+        {
+            "dietary": [
+                "gluten-free",
+                "dairy-free",
+                "vegan-option"
+            ],
+            "location": "Tidewater",
+            "name": "Dunkin' Donuts",
+            "Hours": [
+                "7:00 AM - 6:00 PM",
+                "7:00 AM -6:00 PM",
+                "7:00 AM - 6:00 PM",
+                "7:00 AM - 6:00 PM",
+                "7:00 AM - 6:00 PM",
+                "8:00 AM - 1:00 PM",
+                "8:00 AM - 1:00 PM"
+            ],
+            "description": "Let's be serious.Dunkin' isn't where you go when you're on a diet. But it's definitely the place to be when you want a warm, sweet donut! While you're there,might as well try dunkin' them in some coffee! Opens at breakfast time every day, so it's the perfect way to wake up."
+        },
+        {
+            "location": "University Mall",
+            "hours": [
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00 PM",
+                "7:00 AM - 9:00PM",
+                "8:00 AM - 9:00 PM",
+                "9:00 AM - 9:00 PM"
+            ],
+            "description": "Of course Tropical Smoothie Cafe offers a stunning array of smoothies, from BlimeyLimey to Beach Bum. But the menu also includes flatbreads, wraps, and sandwiches. This is a great place to go whenever you need thatcombination of sweet and hearty. Open 7:00 AM to 9:00 PM on weekdays, so don't be shy.",
+            "name": "Tropical Smoothie Cafe",
+            "dietary": [
+                "veganoption",
+                "dairy-free option",
+                "gluten-free option"
+            ]
+        },
+        {
+            "name": "Starbucks",
+            "hours": [
+                "7:30 AM - 9:00 PM",
+                "7:30 AM - 9:00 PM",
+                "7:30 AM - 9:00 PM",
+                "7:30 AM - 9:00 PM",
+                "7:30 AM - 9:00 PM",
+                "11:00 AM -8:00 PM",
+                "11:00 AM - 8:00 PM"
+            ],
+            "description": "For many coffee-lovers, there's only one place to get the perfect caffine rush. Starbucks offersan incredibly selection of warm beverages, including caffine-free, so you'll be sure to find something you love. There are also fresh pastriesavailable, make sure to grab one with your drink.",
+            "location": "Johnson Center",
+            "dietary": [
+                "vegan option",
+                "dairy-free option",
+                "gluten-freeoption"
+            ]
+        },
+        {
+            "description": "Open only for a few hours during the day, you'll have to move fast if you want to grab a bite at McAlister's Deli. But ifyou're one of that lucky group, you'll be feasting on tall sandwiches, steaming stuffed potaters, and warm soups! How about some tea,mate?",
+            "name": "McAlister's Deli",
+            "dietary": [
+                "gluten-free option",
+                "dairy-free option",
+                "vegan option"
+            ],
+            "hours": [
+                "10:00 AM - 4:00 PM",
+                "10:00 AM -4:00 PM",
+                "10:00 AM - 4:00 PM",
+                "10:00 AM - 7:00 PM",
+                "10:00 AM - 8:00 PM",
+                "10:00 AM - 8:00 PM",
+                "11:00 AM - 4:00 PM"
+            ],
+            "location": "UniversityMall"
+        },
+        {
+            "location": "University Mall",
+            "hours": [
+                "11:00 AM - 11:00 PM",
+                "11:00 AM - 11:00 PM",
+                "11:00 AM - 11:00 PM",
+                "11:00 AM - 11:00 PM",
+                "11:00 AM -12:00 AM",
+                "11:00 AM - 12:00 AM",
+                "11:00 AM - 11:00 PM"
+            ],
+            "dietary": [
+                "dairy-free option",
+                "gluten-free option"
+            ],
+            "name": "The HalalGuys",
+            "description": "If you eat halal, changes are you already know all about The Halal Guys' delicious gyros, falafel, and salads. But ifnot, don't let your love of pork keep you from enjoying a chicken platter or wrap here! The food is good and served fast from 11:00 AM to11:00 PM every day of the week."
+        },
+        {
+            "location": "University Mall",
+            "description": "Soups, curries, seafood, fried rice, Bangkok Golden Thai has it all! Even spice lovers andvegetarians will have no trouble finding something they love here. Stays open until 10:00 PM, so there's no risk of outstaying your welcomeBangkok Golden Thai.",
+            "dietary": [
+                "gluten-free option",
+                "vegan option",
+                "dairy-free option"
+            ],
+            "hours": [
+                "11:00 AM - 10:00 PM",
+                "11:00 AM - 10:00PM",
+                "11:00 AM - 10:00 PM",
+                "11:00 AM - 10:00 PM",
+                "11:00 AM - 10:00 PM",
+                "12:00 PM - 10:00 PM",
+                "12:00 PM - 10:00 PM"
+            ],
+            "name": "Bangkok GoldenThai"
+        },
+        {
+            "name": "Dominos",
+            "description": "If you know someone who hasn't tried Domino's, take pity and treat them to a warm, thick, cheesy slice oftheir delicious hand tossed pizza! If that's not your style, how about a sandwich or pasta bowl? Domino's stays open until 1:00 AM, perfectfor those late-night study sessions.",
+            "dietary": [
+                "gluten-free option",
+                "vegen option",
+                "dairy-free option"
+            ],
+            "location": "UniversityMall",
+            "hours": [
+                "11:00 AM - 1:00 AM",
+                "11:00 AM - 1:00 AM",
+                "11:00 AM - 1:00 AM",
+                "11:00 AM - 1:00 AM",
+                "11:00 AM - 2:00 AM",
+                "11:00 AM - 2:00AM",
+                "11:00 AM - 1:00 AM"
+            ]
+        },
+        {
+            "description": "Looking for a quick, hearty meal? Why not try a hamburger at Steak n' Shake? Conveniently located in the Johnson Center, Steakn' Shake offers delicious food at great prices. No wonder it's a popular spot for many students, though the lines are still shorter than otherplaces.",
+            "hours": [
+                "11:00 AM - 3:00 PM",
+                "11:00 AM - 3:00 PM",
+                "11:00 AM - 3:00 PM",
+                "11:00 AM - 3:00 PM",
+                "11:00 AM - 3:00 PM",
+                "12:00 noon - 11:59PM",
+                "12:00 noon - 11:59 PM"
+            ],
+            "location": "Johnson Center",
+            "dietary": [
+                "dairy-free-option"
+            ],
+            "name": "Steak 'n Shake"
+        },
+        {
+            "location": "University Mall",
+            "name": "Wendy's",
+            "hours": [
+                "6:30 AM - 1:00 AM",
+                "6:30 AM - 1:00 AM",
+                "6:30 AM - 1:00 AM",
+                "6:30 AM - 1:00 AM",
+                "6:30AM - 1:00 AM",
+                "6:30 AM - 1:00 AM",
+                "6:30 AM - 1:00 AM"
+            ],
+            "description": "If a tomato-pickle-lettuce-bacon double cheeseburger is the way youroll, then how 'bout you roll down to Wendy's? There, you can grab square-cut burgers any time between 6:30 AM and 1:00 AM any day of theweek! If you just need something to get going in the morning, try a breakfast croissant. Wendy's has you covered.",
+            "dietary": [
+                "gluten-freeoption",
+                "dairy-free option"
+            ]
+        },
+        {
+            "location": "University Mall",
+            "description": "A lot of people visit Velocity Wings for their famous chicken wings, topped with any of overthree dozen sauces (careful with the Carolina Reaper, it's blazing hot!). But while Velocity is named for its wings, the menu also offersjuicy burgers, sandwiches, salads, and chili. ",
+            "dietary": [
+                "dairy-free option",
+                "gluten-free option"
+            ],
+            "hours": [
+                "11:00 AM - 10:00 PM",
+                "11:00 AM- 10:00 PM",
+                "11:00 AM - 10:00 PM",
+                "11:00 AM - 10:00 PM",
+                "11:00 AM - 11:00 PM",
+                "11:00 AM - 11:00 PM",
+                "11:00 AM - 10:00 PM"
+            ],
+            "name": "VelocityWings"
+        },
+        {
+            "hours": [
+                "9:00 AM - 9:00 PM",
+                "9:00 AM - 9:00 PM",
+                "9:00 AM - 9:00 PM",
+                "9:00 AM - 9:00 PM",
+                "9:00 AM - 10:00 PM",
+                "9:00 AM - 10:00 PM",
+                "9:00 AM -9:00 PM"
+            ],
+            "description": "Who doesn't like tacos? And nowhere can you find better tacos than those served at Taco Bamba. Add some chips andqueso, or maybe a chocolate chip cookie, and you've got an unbeatable meal. You could eat here for a month without ordering the same thingtwice.",
+            "dietary": [
+                "dairy-free option",
+                "vegan option"
+            ],
+            "name": "Taco Bamba",
+            "location": "University Mall"
+        },
+        {
+            "dietary": [
+                "gluten-free option",
+                "dairy-free option",
+                "vegan option"
+            ],
+            "description": "Do you like savory meat cooked over leaping flames? TheSamurai Japanese Steakhouse menu includes everything a hungry student could ask for: soup, grilled meat, fried rice, and seafood. No Japaneserestaurant would be complete without sushi, and you can also order all kinds here.",
+            "hours": [
+                "12:00 PM - 9:00 PM",
+                "12:00 PM - 9:00 PM",
+                "12:00PM - 9:00 PM",
+                "12:00 PM - 9:00 PM",
+                "12:00 PM - 9:00 PM",
+                "12:00 PM - 9:00 PM",
+                "12:00 PM - 9:00 PM"
+            ],
+            "name": "Samurai JapaneseSteakhouse",
+            "location": "University Mall"
+        },
+        {
+            "location": "Merten Hall",
+            "dietary": [
+                "dairy-free option",
+                "vegan option"
+            ],
+            "name": "Panda Express",
+            "description": "when you crave Chinese food atGeorge Mason University, Panda Express is where you go. Panda Express offers a wide menu of all sorts of delicious chinese-inspired food.Bowl, platter, or roll? Pand Express has it all.",
+            "hours": [
+                "10:30 AM - 9:00 PM",
+                "10:30 AM - 9:00 PM",
+                "10:30 AM - 9:00 PM",
+                "10:30 AM - 9:00PM",
+                "10:30 AM - 8:00 PM",
+                "11:00 AM - 5:00 PM",
+                "11:00 AM - 5:00 PM"
+            ]
+        },
+        {
+            "description": "Many students believe that nothing tastes more like home than a fresh, fire-baked pizza straight from the ovens at BlazePizza. This popular restaurant, located in the Johnson Center, offers delicious personal-sized pizzas with dozens of toppings. Blaze Pizzastays open until 8:00 PM every day of the week, so it's a great choice if dinner is running late.",
+            "name": "BlazePizza",
+            "dietary": [
+                "gluten-free-option",
+                "dairy-free-option",
+                "vegan-option"
+            ],
+            "location": "Johnson Center",
+            "hours": [
+                "11:00 AM - 8:00 PM",
+                "11:00 AM- 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM"
+            ]
+        },
+        {
+            "hours": [
+                "11:00 AM - 5:00 PM",
+                "11:00 AM - 5:00 PM",
+                "11:00 AM - 5:00 PM",
+                "11:00 AM - 5:00 PM",
+                "11:00 AM - 5:00PM",
+                "Closed",
+                "Closed"
+            ],
+            "description": "Sometimes, there's nothing better than a hearty hogie! Subway's classic six-inch (or footlong, if you'refeeling bold) sandwiches can be stuffed with all kinds of delicious toppings, and can be eaten on the go. Closes at 5:00 PM, so be sure toarrive early or you'll miss out!",
+            "location": "Roger's Hall",
+            "name": "Subway",
+            "dietary": [
+                "dairy-free option",
+                "vegan option"
+            ]
+        },
+        {
+            "name": "Einstein Bros. Bagles",
+            "description": "Nothing hits the spot like bagel breakfast during exam week! Einstein Bro. Bagels is the placeto go when you need a quick, tasty meal. This restaurant also offers protein-filled bagels and coffee on the side. Come as early as you like,Einstein Bros. opens at 7:30 AM.",
+            "hours": [
+                "7:30 AM - 5:00 PM",
+                "7:30 AM - 5:00 PM",
+                "7:30 AM - 5:00 PM",
+                "7:30 AM - 5:00 PM",
+                "7:30 AM - 5:00PM",
+                "Closed",
+                "Closed"
+            ],
+            "dietary": [
+                "vegan option",
+                "dairy-free option",
+                "gluten-free option"
+            ],
+            "location": "Merten Hall"
+        },
+        {
+            "name": "Einstein Bros Bagles",
+            "location": "Engineering Building",
+            "hours": [
+                "8:00 AM - 1:00 PM",
+                "8:00 AM - 1:00 PM",
+                "8:00 AM - 1:00 PM",
+                "8:00 AM- 1:00 PM",
+                "8:00 AM - 1:00 PM",
+                "Closed",
+                "Closed"
+            ],
+            "description": "Nothing hits the spot like bagel breakfast during exam week! Einstein Bros.Bagels is the place to go when you need a quick, tasty meal. This restaurant also offers protein-filled bagels and coffee on the side. Come asearly as you like, Einstein Bros. opens at 8:00 AM.",
+            "dietary": [
+                "vegan option",
+                "dairy-free option",
+                "gluten-free option"
+            ]
+        },
+        {
+            "hours": [
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00 AM - 8:00 PM",
+                "11:00AM - 8:00 PM"
+            ],
+            "name": "Akeno Sushi",
+            "dietary": [
+                "vegan option",
+                "dairy-free option",
+                "gluten-free option"
+            ],
+            "description": "How about some rawfish? Akeno Sushi is the place to go when for a bite of fresh sushi. But although it's famous for its sushi, Akeno also offers other types ofThai food. How about some Boba tea, or some warm soup? If you've never tried sushi, remember that college is the time to try newthings!",
+            "location": "Johnson Center"
+        },
+        {
+            "dietary": [
+                "vegan option",
+                "dairy-free option",
+                "gluten-free option"
+            ],
+            "hours": [
+                "8:00 AM - 9:00 PM",
+                "8:00 AM - 9:00 PM",
+                "8:00 AM - 9:00PM",
+                "8:00 AM - 9:00 PM",
+                "8:00 AM - 3:00 PM",
+                "Closed",
+                "Closed"
+            ],
+            "description": "We all know it. We all love it. Chick-Fil-A didn't invent thechicken, but they sure did invent a tasty chicken sandwich! Dip some of those famous waffle fries in Chick-Fil-A sauce and grab a milkshake onthe side, and you've got a quick, delicious meal. But remember, closed on Sunday.",
+            "name": "Chick Fil A",
+            "location": "SUB 1"
+        },
+        {
+            "location": "University Mall",
+            "dietary": [
+                "vegan option",
+                "dairy-free option",
+                "gluten-free option"
+            ],
+            "name": "Dunkin' Donuts",
+            "description": "Let'sbe serious. Dunkin' isn't where you go when you're on a diet. But it's definitely the place to be when you want a warm, sweet donut! Whileyou're there, might as well try dunkin' them in some coffee! Dunkin' Donuts opens at 5:00 AM every day but Sunday, so it's the perfect way towake up and get those sweet sweet calories.",
+            "hours": [
+                "5:00 AM - 7:00 PM",
+                "5:00 AM - 7:00 PM",
+                "5:00 AM - 7:00 PM",
+                "5:00 AM - 7:00 PM",
+                "5:00 AM- 7:00 PM",
+                "5:00 AM - 7:00 PM",
+                "6:00 AM - 7:00 PM"
+            ]
+        }
+    ]
+}

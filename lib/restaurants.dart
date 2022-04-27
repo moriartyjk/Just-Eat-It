@@ -252,7 +252,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
   /// Render the rating widgets.
   Widget buildRatingView(BuildContext context) {
-    var stars = List<IconButton>.generate(3, (i) {
+    var stars = List<IconButton>.generate(5, (i) {
       return IconButton(
         icon: Icon(rating > i ? Icons.star : Icons.star_border),
         onPressed: () => setState(() => rating = (i+1)),
