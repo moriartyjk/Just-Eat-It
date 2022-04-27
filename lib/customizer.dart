@@ -16,8 +16,9 @@ class Cuisines {
   static const japanese = 'Japanese';
   static const mediterranean = 'Mediterranean';
   static const mexican = 'Mexican';
+  static const thai = 'Thai';
 
-  static const all = [american, beverages, breakfast, chinese, health, japanese, mediterranean, mexican];
+  static const all = [american, beverages, breakfast, chinese, health, japanese, mediterranean, mexican, thai];
 }
 
 class CustomizerPage extends StatefulWidget {
@@ -84,6 +85,8 @@ class _CustomizerPageState extends State<CustomizerPage> {
                 //----------MEXICAN----------
                 _buildSelection(Cuisines.mexican, userPref, context),
                 const Divider(),
+                //----------THAI----------
+                _buildSelection(Cuisines.thai, userPref, context),
               ],
             ),
           ),

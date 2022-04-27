@@ -56,15 +56,6 @@ class JustEatItAppBarState extends State<JustEatItAppBar> {
                   Flexible(
                     flex: 1,
                     child: TextButton(
-                      child: Text('Preferences',
-                        style: TextStyle(color: Colors.grey[100], fontSize: 18),
-                      ),
-                      onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/pref_nav', (_) => false)
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: TextButton(
                       child: Text(
                         auth.currentUser == null ? 'Log In' : 'Log Out',
                         style: TextStyle(color: Colors.grey[100], fontSize: 18),
@@ -78,6 +69,37 @@ class JustEatItAppBarState extends State<JustEatItAppBar> {
                         }
                       }
                     ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    //if user isn't signed in, empty text, if user is signed in, create pop up
+                    child: auth.currentUser == null ? const Text("") : PopupMenuButton(
+                      child: Text(
+                        "Options",
+                        style: TextStyle(color: Colors.grey[100], fontSize: 18),
+                        ),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          child: Text("Cuisine Preferences"),
+                          value: '/preferences',
+                        ),
+                        const PopupMenuItem(
+                          child: Text("See All Restaurants"),
+                          value: '/list',
+                        ),
+                      ],
+                      onSelected: (value) {
+                        Navigator.pushNamedAndRemoveUntil(context, value.toString(), (_) => false);
+                      },
+                    ),
+                    /*
+                    child: TextButton(
+                      child: Text(
+                        auth.currentUser == null ? '' : 'Options',
+                        style: TextStyle(color: Colors.grey[100], fontSize: 18),
+                      ),
+                      onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/pref_nav', (_) => false)
+                    ), */
                   ),
                   Flexible(flex: 2, child: Container())
                 ],
