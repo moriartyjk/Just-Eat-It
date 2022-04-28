@@ -50,7 +50,7 @@ class JustEatIt extends StatelessWidget {
         '/login': (context) => LoginPage(auth: auth),
         '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/preferences': (context) => CustomizerPage(auth: auth),
-        '/list':        (context) => RestaurantListPage(auth: auth),
+        '/list':        (context) => RestaurantListPage(auth: auth, store: store),
         '/pref_nav':    (context) => CustomizerNav(auth: auth),
       },
     );
