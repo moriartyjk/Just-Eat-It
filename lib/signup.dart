@@ -163,7 +163,7 @@ class SignupPageState extends State<SignupPage> {
         );
         final user = widget.auth.currentUser;
         widget.store.collection('users').doc(user!.uid).set({'email': user.email, 'preferences': ''});
-        Navigator.popAndPushNamed(context, '/preferences');
+        Navigator.popAndPushNamed(context, '/restaurants');
       } on FirebaseAuthException catch (e) {
         setState(() => handleFirebaseAuthError(e));
       }

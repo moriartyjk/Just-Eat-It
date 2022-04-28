@@ -141,7 +141,7 @@ class LoginPageState extends State<LoginPage> {
           email: emailController.text,
           password: passwordController.text,
         );
-        Navigator.popAndPushNamed(context, '/pref_nav');
+        Navigator.popAndPushNamed(context, '/restaurants');
       } on FirebaseAuthException catch (e) {
         setState(() => handleFirebaseAuthError(e));
       }
