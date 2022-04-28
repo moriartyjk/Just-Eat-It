@@ -28,7 +28,7 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: JustEatItAppBar.create(context),
+      appBar: JustEatItAppBar.create(context, widget.auth),
       body: Form(
         key: formKey,
         child: Center(

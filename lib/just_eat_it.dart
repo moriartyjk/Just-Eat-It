@@ -45,20 +45,21 @@ class JustEatIt extends StatelessWidget {
       title: 'Just Eat It',
       theme: ThemeData(primarySwatch: darkGreen),
       routes: {
-        '/': (context) => const MyHomePage(title: 'Just Eat It'),
+        '/': (context) => MyHomePage(title: 'Just Eat It', auth: auth),
         '/signup': (context) => SignupPage(auth: auth, store: store),
         '/login': (context) => LoginPage(auth: auth),
         '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
-        '/preferences': (context) => const CustomizerPage(),
-        '/list':        (context) => const RestaurantListPage(),
-        '/pref_nav':    (context) => const CustomizerNav(),
+        '/preferences': (context) => CustomizerPage(auth: auth),
+        '/list':        (context) => RestaurantListPage(auth: auth),
+        '/pref_nav':    (context) => CustomizerNav(auth: auth),
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final FirebaseAuth auth;
+  const MyHomePage({Key? key, required this.title, required this.auth}) : super(key: key);
 
   final String title;
 
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: JustEatItAppBar.create(context),
+      appBar: JustEatItAppBar.create(context, widget.auth),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.

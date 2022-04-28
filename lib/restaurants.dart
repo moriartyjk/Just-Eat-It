@@ -77,7 +77,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
       );
 
       return Scaffold(
-        appBar: JustEatItAppBar.create(context),
+        appBar: JustEatItAppBar.create(context, widget.auth),
         body: Center(
           child: PageView(
             scrollDirection: Axis.vertical,

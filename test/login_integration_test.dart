@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
+import 'package:justeatit/restaurants.dart';
 import 'package:justeatit/signup.dart';
 
 import 'helpers.dart';
@@ -22,7 +23,7 @@ class LoginPageWrapper extends StatelessWidget {
     return MaterialApp(
       home: LoginPage(auth: auth),
       routes: {
-        '/pref_nav': (context) => const CustomizerNav(),
+        '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/signup': (context) => SignupPage(auth: auth, store: store),
       },
     );

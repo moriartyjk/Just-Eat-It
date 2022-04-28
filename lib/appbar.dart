@@ -2,24 +2,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class JustEatItAppBar extends StatefulWidget {
-  const JustEatItAppBar({ Key? key }) : super(key: key);
+  const JustEatItAppBar({ Key? key, required this.auth}) : super(key: key);
+  final FirebaseAuth auth; 
+  
 
   @override
   State<JustEatItAppBar> createState() => JustEatItAppBarState();
 
-  static PreferredSizeWidget create(BuildContext context) {
+  static PreferredSizeWidget create(BuildContext context, FirebaseAuth auth) {
     final size = MediaQuery.of(context).size;
 
     return PreferredSize(
       preferredSize: Size(size.width, 60),
-      child: const JustEatItAppBar()
+      child: JustEatItAppBar(auth : auth)
     );
   }
 }
 
 class JustEatItAppBarState extends State<JustEatItAppBar> {
-  final auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -57,14 +57,14 @@ class JustEatItAppBarState extends State<JustEatItAppBar> {
                     flex: 1,
                     child: TextButton(
                       child: Text(
-                        auth.currentUser == null ? 'Log In' : 'Log Out',
+                        widget.auth.currentUser == null ? 'Log In' : 'Log Out',
                         style: TextStyle(color: Colors.grey[100], fontSize: 18),
                       ),
                       onPressed: () {
-                        if (auth.currentUser == null) {
+                        if (widget.auth.currentUser == null) {
                           Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
                         } else {
-                          FirebaseAuth.instance.signOut();
+                          widget.auth.signOut();
                           Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                         }
                       }
@@ -73,7 +73,7 @@ class JustEatItAppBarState extends State<JustEatItAppBar> {
                   Flexible(
                     flex: 1,
                     //if user isn't signed in, empty text, if user is signed in, create pop up
-                    child: auth.currentUser == null ? const Text("") : PopupMenuButton(
+                    child: widget.auth.currentUser == null ? const Text("") : PopupMenuButton(
                       child: Text(
                         "Options",
                         style: TextStyle(color: Colors.grey[100], fontSize: 18),
