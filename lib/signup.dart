@@ -40,7 +40,7 @@ class SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: JustEatItAppBar.create(context),
+      appBar: JustEatItAppBar.create(context, widget.auth),
       body: Form(
         key: formKey,
         child: Center(
@@ -162,7 +162,7 @@ class SignupPageState extends State<SignupPage> {
           password: passwordController.text,
         );
         final user = widget.auth.currentUser;
-        widget.store.collection('users').doc(user!.uid).set({'email': user.email, 'preferences': ''});
+        widget.store.collection('users').doc(user!.uid).set({'email': user.email, 'preferences': []});
         Navigator.popAndPushNamed(context, '/restaurants');
       } on FirebaseAuthException catch (e) {
         setState(() => handleFirebaseAuthError(e));

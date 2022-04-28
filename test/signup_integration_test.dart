@@ -8,6 +8,7 @@ import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
+import 'package:justeatit/restaurants.dart';
 import 'package:justeatit/signup.dart';
 
 import 'helpers.dart';
@@ -23,9 +24,9 @@ class SignupPageWrapper extends StatelessWidget {
     return MaterialApp(
       home: SignupPage(auth: auth, store: store),
       routes: {
-        '/pref_nav': (context) => const CustomizerNav(),
+        '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/login': (context) => LoginPage(auth: auth),
-        '/preferences': (context) => const CustomizerPage(),
+        '/preferences': (context) => CustomizerPage(auth: auth),
       },
     );
   }

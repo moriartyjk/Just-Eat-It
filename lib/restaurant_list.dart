@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'appbar.dart';
 
 class RestaurantListPage extends StatefulWidget {
-  const RestaurantListPage({ Key? key }) : super(key: key);
+  final FirebaseAuth auth;
+
+  const RestaurantListPage({ Key? key, required this.auth }) : super(key: key);
 
   @override
   State<RestaurantListPage> createState() => _RestaurantListPageState();
@@ -18,7 +21,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
 
     CollectionReference restaurants = FirebaseFirestore.instance.collection("restaurants");
     return Scaffold(
-      appBar: JustEatItAppBar.create(context),
+      appBar: JustEatItAppBar.create(context, widget.auth),
       //body of list view
         //created a custom scrolling list with adjustable length
       body: Center(

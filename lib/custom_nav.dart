@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'appbar.dart';
 
 class CustomizerNav extends StatefulWidget {
-  const CustomizerNav({ Key? key }) : super(key: key);
+  final FirebaseAuth auth;
+  const CustomizerNav({ Key? key, required this.auth }) : super(key: key);
 
   @override
   State<CustomizerNav> createState() => _CustomizerNavState();
@@ -16,7 +18,7 @@ class _CustomizerNavState extends State<CustomizerNav> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: JustEatItAppBar.create(context),
+      appBar: JustEatItAppBar.create(context, widget.auth),
       body: Center(
         child: SizedBox(
           width: 400,

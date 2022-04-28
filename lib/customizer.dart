@@ -22,7 +22,8 @@ class Cuisines {
 }
 
 class CustomizerPage extends StatefulWidget {
-  const CustomizerPage({ Key? key }) : super(key: key);
+  final FirebaseAuth auth;
+  const CustomizerPage({ Key? key, required this.auth }) : super(key: key);
 
   @override
   State<CustomizerPage> createState() => _CustomizerPageState();
@@ -41,7 +42,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
   Widget build(BuildContext context) {
 
     //build globals
-    final user = FirebaseAuth.instance.currentUser;
+    final user = widget.auth.currentUser;
 
     //reference to the cuisine collection
     //CollectionReference cuisine = FirebaseFirestore.instance.collection("cuisine");
@@ -51,7 +52,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
     var userPref = FirebaseFirestore.instance.collection('users').doc(user?.uid);
 
     return Scaffold(
-      appBar: JustEatItAppBar.create(context),
+      appBar: JustEatItAppBar.create(context, widget.auth),
       //body of list view
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start, //press to top of page
