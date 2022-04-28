@@ -157,7 +157,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
                   padding: const EdgeInsets.all(20),
                   child: ElevatedButton(
                     child: const Text(
-                      "Get Reccommendation",
+                      "Get Recommendation",
                     ),
                     onPressed: () {
                       Navigator.pushNamedAndRemoveUntil(context, '/restaurants', (_) => false);
