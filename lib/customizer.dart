@@ -16,8 +16,9 @@ class Cuisines {
   static const japanese = 'Japanese';
   static const mediterranean = 'Mediterranean';
   static const mexican = 'Mexican';
+  static const thai = 'Thai';
 
-  static const all = [american, beverages, breakfast, chinese, health, japanese, mediterranean, mexican];
+  static const all = [american, beverages, breakfast, chinese, health, japanese, mediterranean, mexican, thai];
 }
 
 class CustomizerPage extends StatefulWidget {
@@ -52,58 +53,121 @@ class _CustomizerPageState extends State<CustomizerPage> {
     return Scaffold(
       appBar: JustEatItAppBar.create(context),
       //body of list view
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start, //press to top of page
         children: [
-          //==========SELECTION VIEW==========
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(20),
+          Container( //title header
+            height: 100,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("Cuisine Options",
+                  style: TextStyle(
+                    color: Colors.green.shade800,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                //VerticalDivider(),
+                Text("Applied Preferences",
+                  style: TextStyle(
+                    color: Colors.green.shade800,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ]
+            ),
+          ),
+          SizedBox( //turn this into body
+            height: MediaQuery.of(context).size.height-260, //account for containers aboce, below, and app bar
+            width:  MediaQuery.of(context).size.width,
+            //color: Colors.yellow.shade100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                 //----------AMERICAN----------
-                _buildSelection(Cuisines.american, userPref, context),
-                const Divider(),
-                 //----------BEVERAGES----------
-                _buildSelection(Cuisines.beverages, userPref, context),
-                const Divider(),
-                 //----------BREAKFAST----------
-                _buildSelection(Cuisines.breakfast, userPref, context),
-                const Divider(),
-                //----------CHINESE----------
-                _buildSelection(Cuisines.chinese, userPref, context),
-                const Divider(),
-                //----------HEALTH----------
-                _buildSelection(Cuisines.health, userPref, context),
-                const Divider(),
-                //----------JAPANESE----------
-                _buildSelection(Cuisines.japanese, userPref, context),
-                const Divider(),
-                 //----------MEDITERANIAN----------
-                _buildSelection(Cuisines.mediterranean, userPref, context),
-                const Divider(),
-                //----------MEXICAN----------
-                _buildSelection(Cuisines.mexican, userPref, context),
-                const Divider(),
+                //Icon(Icons.star, color: Colors.red,), //turning this into cuisine options side
+                Expanded(
+                  flex: 1,
+                  child: ListView(
+                    padding: const EdgeInsets.all(18),
+                    children: <Widget>[
+                      //----------AMERICAN----------
+                      _buildSelection(Cuisines.american, userPref, context),
+                      const Divider(),
+                      //----------BEVERAGES----------
+                      _buildSelection(Cuisines.beverages, userPref, context),
+                      const Divider(),
+                      //----------BREAKFAST----------
+                      _buildSelection(Cuisines.breakfast, userPref, context),
+                      const Divider(),
+                      //----------CHINESE----------
+                      _buildSelection(Cuisines.chinese, userPref, context),
+                      const Divider(),
+                      //----------HEALTH----------
+                      _buildSelection(Cuisines.health, userPref, context),
+                      const Divider(),
+                      //----------JAPANESE----------
+                      _buildSelection(Cuisines.japanese, userPref, context),
+                      const Divider(),
+                      //----------MEDITERANIAN----------
+                      _buildSelection(Cuisines.mediterranean, userPref, context),
+                      const Divider(),
+                      //----------MEXICAN----------
+                      _buildSelection(Cuisines.mexican, userPref, context),
+                      const Divider(),
+                      //----------THAI----------
+                      _buildSelection(Cuisines.thai, userPref, context),
+                    ],
+                  ),
+                ),
+              //const VerticalDivider(),
+                //const Icon(Icons.star, color: Colors.red,),
+               Expanded(
+                child: _saved.isNotEmpty //if preferences list is not empty, create a listveiw builder otherwise, show text
+                  ? _buildSelected(context)
+                  : Container(
+                    alignment: Alignment.center,
+                    height: 150,
+                    child: const Text("No Preferences Selected"),
+                    //color: Colors.yellow.shade100,
+                  ),
+              ),
               ],
             ),
           ),
-          //==========SELECTED PREFERENCES VIEW==========
-          Expanded(
-            child: _saved.isNotEmpty //if preferences list is not empty, create a listveiw builder otherwise, show text
-              ? _buildSelected(context)
-              : Container(
-                alignment: Alignment.center,
-                height: 150,
-                child: const Text("No Preferences Selected"),
-              ),
+          Container( //turn this into reset and go to reccomnend buttons
+            height: 100,
+            width:  MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                /*Refresh preferences button*/
+                Container(
+                  //alignment: Alignment.bottomRight,
+                  padding: const EdgeInsets.all(20),
+                  child: _clearPreferences(userPref, context),
+                ),
+                //const VerticalDivider(),
+                /*Go to reccommendation page button*/
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: ElevatedButton(
+                    child: const Text(
+                      "Get Recommendation",
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(context, '/restaurants', (_) => false);
+                    },
+                  ),
+                ), 
+              ],
+            ),
           ),
-          //----------RESET PREFERENCES----------
-          Container(
-            alignment: Alignment.bottomRight,
-            padding: const EdgeInsets.all(20),
-            child: _clearPreferences(userPref, context),
-          )
-        ], //end of Row children
+        ],
       ),
     );
   }
@@ -118,11 +182,13 @@ class _CustomizerPageState extends State<CustomizerPage> {
     //name -> restaurant name in upper case
     return ListTile(
       minVerticalPadding: 20,
-      leading: Icon(
-        alreadySaved ? Icons.circle : Icons.circle_outlined,
-        color: Colors.amber.shade800,
-        semanticLabel: alreadySaved ? 'Remove from Selected' : 'Select',
-      ),
+      tileColor: Colors.green.shade100,
+      selectedTileColor: Colors.green,
+      //leading: Icon(
+      //  alreadySaved ? Icons.star : Icons.star_border,
+      //  color: Colors.amber.shade800,
+      //  semanticLabel: alreadySaved ? 'Remove from Selected' : 'Select',
+      //),
       title: Text(
         name, //name of restaurant
         style: TextStyle(
@@ -163,9 +229,9 @@ class _CustomizerPageState extends State<CustomizerPage> {
   //Clear preferences
   Widget _clearPreferences(DocumentReference<Map<String, dynamic>> userPref, BuildContext context){
 
-    return FloatingActionButton(
-      child: const Icon(
-        Icons.refresh,
+    return ElevatedButton(
+      child: const Text(
+        "Refresh Preferences",
       ),
       onPressed: () {
         setState(() {
@@ -183,5 +249,5 @@ class _CustomizerPageState extends State<CustomizerPage> {
     }
   }
 
-} //==========CustomizerPage END==========
+} //==========CustomizerPage Class END==========
 
