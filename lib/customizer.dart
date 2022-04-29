@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'appbar.dart';
 
 //Globals
+final _saved = <String> []; //global so that it is saved between navigations
 
 /// a wrapper class to hold all the cuisine values
 class Cuisines {
@@ -33,7 +34,7 @@ class _CustomizerPageState extends State<CustomizerPage> {
   //class globals
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final _saved = <String> []; //list of selected preferences
+  //final _saved = <String> []; //list of selected preferences
 
   //helping functions
 

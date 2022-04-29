@@ -50,3 +50,6 @@ app.*.map.json
 
 # Coverage reports
 coverage/
+
+# .perl files
+*.perl
