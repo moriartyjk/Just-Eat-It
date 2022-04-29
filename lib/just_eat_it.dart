@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'custom_nav.dart';
+//import 'custom_nav.dart';
 import 'customizer.dart';
 import 'restaurant_list.dart';
 import 'appbar.dart';
@@ -51,7 +51,6 @@ class JustEatIt extends StatelessWidget {
         '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/preferences': (context) => CustomizerPage(auth: auth),
         '/list':        (context) => RestaurantListPage(auth: auth),
-        '/pref_nav':    (context) => CustomizerNav(auth: auth),
       },
     );
   }
