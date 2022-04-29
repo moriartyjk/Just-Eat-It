@@ -9,6 +9,8 @@ import 'recommend_unit_test.dart';
 
 void main(){
 
+  //these will be about checking whether the data base is updated correctly and stuff like that...
+
   final chipotle = {
     'description': 'Chipotle serves burritos.',
     'dietary': ['gluten-free', 'vegan' ],

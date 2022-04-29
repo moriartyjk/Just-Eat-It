@@ -56,4 +56,69 @@ void main() {
     expect(find.byType(ElevatedButton), findsWidgets);
   });
 
+  testWidgets('Can add to selected preferences column', (tester) async {
+    setDisplayDimensions(tester);
+    final store = FakeFirebaseFirestore();
+    final auth = MockFirebaseAuth(
+      signedIn: true,
+      mockUser: MockUser()
+    );
+    await tester.pumpWidget(CustomizerPageWrapper(auth: auth, store: store));
+    await tester.tap(find.widgetWithText(ListTile, 'American'));
+    await tester.pump();
+    expect(find.text('American').last, findsWidgets);
+
+  });
+
+  testWidgets('Can see multiple selected preferences with dividers', (tester) async {
+    setDisplayDimensions(tester);
+    final store = FakeFirebaseFirestore();
+    final auth = MockFirebaseAuth(
+      signedIn: true,
+      mockUser: MockUser()
+    );
+    await tester.pumpWidget(CustomizerPageWrapper(auth: auth, store: store));
+    await tester.tap(find.widgetWithText(ListTile, 'Chinese'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(ListTile, 'Breakfast'));
+    await tester.pump();
+    expect(find.text('Chinese').last, findsWidgets);
+    expect(find.byType(Divider), findsWidgets);
+    expect(find.text('Breakfast').last, findsWidgets);
+  });
+
+  testWidgets('Pressing "Resets preferences" removes selected preferences', (tester) async {
+    setDisplayDimensions(tester);
+    final store = FakeFirebaseFirestore();
+    final auth = MockFirebaseAuth(
+      signedIn: true,
+      mockUser: MockUser()
+    );
+    await tester.pumpWidget(CustomizerPageWrapper(auth: auth, store: store));
+    await tester.tap(find.widgetWithText(ListTile, 'Beverages'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Refresh Preferences'));
+    await tester.pump();
+    expect(find.text('No Preferences Selected'), findsWidgets);
+
+  });
+
+  //Last test to get full coverage: how to tap the same widget twice when there are technically two on the screen
+  testWidgets('Can remove a selected preference by retapping cuisine option', (tester) async {
+    setDisplayDimensions(tester);
+    final store = FakeFirebaseFirestore();
+    final auth = MockFirebaseAuth(
+      signedIn: true,
+      mockUser: MockUser()
+    );
+    await tester.pumpWidget(CustomizerPageWrapper(auth: auth, store: store));
+    //await tester.tapAt(List)
+    await tester.tap(find.widgetWithText(ListTile, 'Beverages').first);//tap one
+    await tester.pump();
+    await tester.tap(find.widgetWithText(ListTile, 'Beverages').first);//tap two
+    await tester.pump();
+    expect(find.text('Beverages'), findsOneWidget); //after tapping again, there should only be one
+    expect(find.text('No Preferences Selected'), findsWidgets); //preferences should also be empty
+  });
+
 } //end of main
