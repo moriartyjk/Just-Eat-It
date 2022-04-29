@@ -5,7 +5,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:justeatit/appbar.dart';
-import 'package:justeatit/custom_nav.dart';
+//import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
@@ -24,7 +24,7 @@ class AppBarWrapper extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(body: JustEatItAppBar(auth: auth)),
       routes: {
-         '/pref_nav': (context) => CustomizerNav(auth: auth),
+         //'/pref_nav': (context) => CustomizerNav(auth: auth),
          '/preferences': (context) => CustomizerPage(auth: auth),         
          '/login' : (context) => LoginPage(auth : auth),
          '/signup': (context) => SignupPage(auth: auth, store: store),
