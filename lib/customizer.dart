@@ -33,9 +33,6 @@ class CustomizerPage extends StatefulWidget {
 class _CustomizerPageState extends State<CustomizerPage> {
   //class globals
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  //final _saved = <String> []; //list of selected preferences
-
   //helping functions
 
 //build layout
