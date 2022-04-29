@@ -51,7 +51,6 @@ class JustEatIt extends StatelessWidget {
         '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/preferences': (context) => CustomizerPage(auth: auth),
         '/list':        (context) => RestaurantListPage(auth: auth),
-        //'/pref_nav':    (context) => CustomizerNav(auth: auth),
       },
     );
   }

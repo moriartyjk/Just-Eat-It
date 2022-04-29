@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-//import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
 import 'package:justeatit/restaurants.dart';
