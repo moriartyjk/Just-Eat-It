@@ -23,7 +23,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
     return Scaffold(
       appBar: JustEatItAppBar.create(context, widget.auth),
       //body of list view
-        //created a custom scrolling list with adjustable length
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -41,52 +40,37 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             ),
           ),
           Expanded(
-          //width: 1000,
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, int index) {
-                      return Container(
-                        alignment: Alignment.center,
-                        //color: Colors.yellow.shade700,
-                        height: 150,
-                        child: FutureBuilder<DocumentSnapshot>(
-                          future: restaurants.doc(index.toString()).get(),
-                          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if(snapshot.hasError){
-                              return const Text("Something went wrong");
-                            }
-
-                            if(snapshot.hasData && !snapshot.data!.exists){
-                              return const Text("Document does not exist",);
-                            }
-
-                            if(snapshot.connectionState == ConnectionState.done) {
-                              Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                              return Text(
-                                "${data["name"]} - ${data["location"]}", 
-                                style: TextStyle(
-                                  fontSize: 30, 
-                                  color: Colors.green.shade900,
-                                ),
-                              );
-                            }
-                            return const Text("loading"); //appears while firestore is retrieving data
-                          },
+            child: StreamBuilder<QuerySnapshot>(
+              stream: widget.store.collection('restaurants').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return const Text('Loading...');
+                final int messageCount = snapshot.data!.docs.length;
+                return ListView.builder(
+                  itemCount: messageCount,
+                  itemBuilder: (_, int index) {
+                    final DocumentSnapshot data = snapshot.data!.docs[index];
+                    return ListTile(
+                      title: Text(
+                        '${data['name']} (${data['location']})',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.green.shade900,
                         ),
-                      );
-                    },
-                  childCount: 25, //adjusts the current length of the list
-                  )
-                )
-              ],
+                      ),
+                      subtitle: Text(
+                        data['description'],
+                        textAlign: TextAlign.justify,
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
           Container(
             alignment: Alignment.center,
             color: Colors.green.shade50,
-            height: 100,
+            height: 75,
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(
               child: const Text(
@@ -98,7 +82,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             ),
           ),
         ],
-      ),     
+      ),
     );
-  } 
+  }
 } // RESTAURANTLISTPAGE CLASS END
