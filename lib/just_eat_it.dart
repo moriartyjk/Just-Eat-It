@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/image17.png'),
+                  image: AssetImage('assets/logos.png'),
                   fit: BoxFit.scaleDown,
                   repeat: ImageRepeat.repeat)),
         ),
@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Text(
                           """Just-Eat-It is a mason student project. It was developed with the purpose of making the mason experience more fun, and dynamic for students, faculty, and visitors.
-                                \n If youre looking for something new and interesting to eat then we got you covered, our algorithm takes into account all local restaurants, your tastes and preferences, and location to give you  the best new thing to try out. 
+                                \n If youre looking for something new and interesting to eat then we got you covered, our algorithm takes into account all local restaurants, your tastes and preferences, and location to give you  the best new thing to try out.
                             """,
                           style: TextStyle(fontSize: 20),
                         ),
