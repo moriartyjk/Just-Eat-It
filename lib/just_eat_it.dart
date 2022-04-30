@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'custom_nav.dart';
 import 'customizer.dart';
 import 'restaurant_list.dart';
 import 'appbar.dart';
