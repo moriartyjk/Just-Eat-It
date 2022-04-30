@@ -19,7 +19,7 @@ class RestaurantsPageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RestaurantsPage(auth: auth, store: store, ignoreVideoProgress: true),
+      home: RestaurantsPage(auth: auth, store: store),
     );
   }
 }
@@ -70,6 +70,7 @@ void main() {
 
   testWidgets('Pressing Go! gives a recommendation', (tester) async {
     setDisplayDimensions(tester);
+    RestaurantsPage.ignoreVideoProgress = true;
     final store = FakeFirebaseFirestore();
     final auth = MockFirebaseAuth();
     final chipotle = {
@@ -80,17 +81,41 @@ void main() {
       'hours': [ '10:45 AM - 10:00 PM', '10:45 AM - 10:00 PM', '10:45 AM - 10:00 PM', '10:45 AM - 10:0 0PM', '10:45 AM - 10:00 PM', '10:45 AM - 10:00 PM', '10:45 AM - 10:00 PM' ],
       'location': 'Johnson Center'
     };
+    final starbucks = {
+      'location': 'Northern Neck',
+      'description': 'Starbucks serves coffee.',
+      'hours': [ '7:00 AM - 9:00 PM', '7:00 AM - 9:00 PM', '7:00 AM - 9:00 PM', '7:00 AM - 9:00 PM', '7:00 AM - 9:00 PM', '9:00 AM - 9:00 PM', '9:00 AM - 9:00 PM' ],
+      'name': 'Starbucks',
+      'cuisine': 'Beverages',
+      'dietary': [ 'dairy-free', 'gluten-free', 'vegan' ],
+    };
     addUserWithPrefs(store, auth, 'dimaggio@yankees.com', []);
     addRestaurant(store, chipotle);
+    addRestaurant(store, starbucks);
     await tester.pumpWidget(RestaurantsPageWrapper(auth: auth, store: store));
     await tester.tap(find.byType(ElevatedButton).first);
     await tester.pumpAndSettle(const Duration(milliseconds: 100));
-    expect(find.text(chipotle['name']!.toString()), findsOneWidget);
-    expect(find.text(chipotle['description']!.toString()), findsOneWidget);
-    expect(find.text(chipotle['location']!.toString()), findsOneWidget);
+    final chipotleFirst = find.text(chipotle['name']!.toString()).evaluate().isNotEmpty;
+    if (chipotleFirst) {
+      expect(find.text(chipotle['description']!.toString()), findsOneWidget);
+      expect(find.text(chipotle['location']!.toString()), findsOneWidget);
+    } else {
+      expect(find.text(starbucks['name']!.toString()), findsOneWidget);
+      expect(find.text(starbucks['description']!.toString()), findsOneWidget);
+      expect(find.text(starbucks['location']!.toString()), findsOneWidget);
+    }
     await tester.tap(find.byType(IconButton).last);
     await tester.tap(find.text('Something else, please'));
-    // unfortunately, the animations make it impossible to actually test
-    // this properly. But at least we ensure that it doesn't raise an error.
+    await tester.pumpAndSettle(const Duration(milliseconds: 100));
+    if (chipotleFirst) {
+      expect(find.text(starbucks['name']!.toString()), findsOneWidget);
+      expect(find.text(starbucks['description']!.toString()), findsOneWidget);
+      expect(find.text(starbucks['location']!.toString()), findsOneWidget);
+    } else {
+      expect(find.text(chipotle['name']!.toString()), findsOneWidget);
+      expect(find.text(chipotle['description']!.toString()), findsOneWidget);
+      expect(find.text(chipotle['location']!.toString()), findsOneWidget);
+    }
+    RestaurantsPage.ignoreVideoProgress = false;
   });
 }
