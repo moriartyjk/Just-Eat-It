@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'custom_nav.dart';
 import 'customizer.dart';
 import 'restaurant_list.dart';
 import 'appbar.dart';
@@ -15,7 +14,8 @@ class JustEatIt extends StatelessWidget {
   final FirebaseAuth auth;
   final FirebaseFirestore store;
 
-  const JustEatIt({Key? key, required this.auth, required this.store}) : super(key: key);
+  const JustEatIt({Key? key, required this.auth, required this.store})
+      : super(key: key);
 
   static Future initFirebase() {
     return Firebase.initializeApp(
@@ -50,7 +50,7 @@ class JustEatIt extends StatelessWidget {
         '/login': (context) => LoginPage(auth: auth),
         '/restaurants': (context) => RestaurantsPage(auth: auth, store: store),
         '/preferences': (context) => CustomizerPage(auth: auth),
-        '/list':        (context) => RestaurantListPage(auth: auth, store: store),
+        '/list': (context) => RestaurantListPage(auth: auth, store: store),
       },
     );
   }
@@ -58,8 +58,8 @@ class JustEatIt extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final FirebaseAuth auth;
-  const MyHomePage({Key? key, required this.title, required this.auth}) : super(key: key);
-
+  const MyHomePage({Key? key, required this.title, required this.auth})
+      : super(key: key);
   final String title;
 
   @override
@@ -67,109 +67,146 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  /*
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }*/
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    double screen_width = MediaQuery.of(context).size.width;
+    double screen_height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: JustEatItAppBar.create(context, widget.auth),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              "Welcome to Just Eat It!",
-              style: TextStyle(
-                fontSize: 40,
-                color: Color.fromARGB(255, 18, 119, 21)),
-              ),
-            /*TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/signup')
-            }, child: const Text(
-                "Sign Up",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromARGB(255, 18, 119, 21),
-                ),
-              )
-              ),*/
-            TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/login')
-            }, child: const Text(
-              "Log in",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromARGB(255, 18, 119, 21),
-                ),
-              )
-              ),
-            /*TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/restaurants')
-            }, child: const Text(
-                "Get Suggestion!",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromARGB(255, 18, 119, 21),
-                ),
-              )
-              ),
-             TextButton(onPressed: () => {
-              Navigator.pushNamed(context, '/list')
-            }, child: const Text(
-                "View Full Restaurant Selection",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromARGB(255, 18, 119, 21),
-                ),
-                )
-              ),*/
-            TextButton(onPressed: () => {
-              FirebaseAuth.instance.signOut()
-            }, child: const Text(
-                "Log out",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromARGB(255, 18, 119, 21),
-                ),
-                )
-              ),
-          ],
+      body: Stack(alignment: Alignment.center, children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/image17.png'),
+                  fit: BoxFit.scaleDown,
+                  repeat: ImageRepeat.repeat)),
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        Container(
+          height: 0.70 * screen_height,
+          width: 0.80 * screen_width,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [BoxShadow(blurRadius: 10)]),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(children: <Widget>[
+              Flexible(
+                  flex: 3,
+                  fit: FlexFit.tight,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Welcome to Just Eat It",
+                            style: TextStyle(
+                                color: Colors.green[800],
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Righteous')),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Text(
+                          "About Us",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Righteous',
+                          ),
+                        ),
+                        Text(
+                          """Just-Eat-It is a mason student project. It was developed with the purpose of making the mason experience more fun, and dynamic for students, faculty, and visitors.
+                                \n If youre looking for something new and interesting to eat then we got you covered, our algorithm takes into account all local restaurants, your tastes and preferences, and location to give you  the best new thing to try out. 
+                            """,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Customize your preferences",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Righteous')),
+                        Text(
+                          "We allow you to set cusine types, your favorite picks,and avoid allergic foods",
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  )),
+              VerticalDivider(width: 10, color: Colors.grey, thickness: 1),
+              Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: Container(
+                  color: Colors.white60,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account?",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.amberAccent,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Lets Eat!",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20),
+                            ),
+                            Icon(Icons.navigate_next_outlined)
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Want to Try us?",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.greenAccent,
+                            padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Create an Account",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 20),
+                              ),
+                              Icon(Icons.navigate_next_rounded)
+                            ],
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ),
+      ]),
     );
   }
 }
