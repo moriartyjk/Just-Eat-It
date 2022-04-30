@@ -8,6 +8,7 @@ import 'package:justeatit/appbar.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
+import 'package:justeatit/restaurant_list.dart';
 import 'package:justeatit/signup.dart';
 
 import 'helpers.dart';
@@ -28,6 +29,7 @@ class AppBarWrapper extends StatelessWidget {
          '/login' : (context) => LoginPage(auth : auth),
          '/signup': (context) => SignupPage(auth: auth, store: store),
          '/about' : (context) => LoginPage(auth : auth),
+         '/list'  :(context) => RestaurantListPage(auth: auth, store: store),
       },
     );
   }
@@ -133,4 +135,25 @@ testWidgets('Appbar maintains state after clicking JustEatIt', (tester) async {
   //   expect(find.textContaining('isn\'t a valid email'), findsOneWidget);
   //   expect(auth.currentUser, isNull);
   // });
+
+  testWidgets('Appbar allows you login and navigate to restaurant list', (tester) async {
+    setDisplayDimensions(tester);
+    MockUser test = MockUser(email :'jonny@jonny.com');
+    final jonny = MockFirebaseAuth(signedIn : true, mockUser : test);
+    final store = FakeFirebaseFirestore();
+    await tester.pumpWidget(AppBarWrapper(auth: jonny));
+    expect(find.text('Just Eat It!'), findsOneWidget);
+    expect(find.text('About'), findsOneWidget);
+    expect(find.text('Options'), findsOneWidget);
+    expect(find.text('Log Out'), findsOneWidget);
+    await tester.tap(find.text('Options'));
+    await tester.pumpAndSettle(Duration(milliseconds : 100));
+    await tester.tap(find.text("See All Restaurants"));
+    await tester.pumpAndSettle(Duration(milliseconds : 100)); 
+    await tester.idle();
+    await tester.pump(Duration(milliseconds : 10000)); 
+    await tester.idle();
+
+    expect (find.text("Restaurant List"), findsOneWidget); 
+    });
 }

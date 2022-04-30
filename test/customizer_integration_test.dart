@@ -7,7 +7,6 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:justeatit/appbar.dart';
-//import 'package:justeatit/custom_nav.dart';
 import 'package:justeatit/customizer.dart';
 import 'package:justeatit/just_eat_it.dart';
 import 'package:justeatit/login.dart';
@@ -42,7 +41,7 @@ void main() {
     await JustEatIt.initFirebase();
   });
 
-  testWidgets('Can switch to reccomendation page', (tester) async{
+  testWidgets('Can switch to recomendation page', (tester) async{
     setDisplayDimensions(tester);
     final store = FakeFirebaseFirestore();
     final auth = MockFirebaseAuth(
