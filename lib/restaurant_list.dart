@@ -5,21 +5,19 @@ import 'appbar.dart';
 
 class RestaurantListPage extends StatefulWidget {
   final FirebaseAuth auth;
+  final FirebaseFirestore store;
 
-  const RestaurantListPage({ Key? key, required this.auth }) : super(key: key);
+  const RestaurantListPage({ Key? key, required this.auth, required this.store }) : super(key: key);
 
   @override
   State<RestaurantListPage> createState() => _RestaurantListPageState();
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
-
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
+    CollectionReference restaurants = widget.store.collection("restaurants");
 
-    CollectionReference restaurants = FirebaseFirestore.instance.collection("restaurants");
     return Scaffold(
       appBar: JustEatItAppBar.create(context, widget.auth),
       //body of list view
