@@ -76,9 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: JustEatItAppBar.create(context, widget.auth),
       body: Stack(alignment: Alignment.center, children: <Widget>[
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/image17.png'),
+                  image: AssetImage('assets/images/logos.png'),
                   fit: BoxFit.scaleDown,
                   repeat: ImageRepeat.repeat)),
         ),
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(30),
-              boxShadow: [BoxShadow(blurRadius: 10)]),
+              boxShadow: const [BoxShadow(blurRadius: 10)]),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(children: <Widget>[
@@ -105,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Righteous')),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
-                        Text(
+                        const Text(
                           "About Us",
                           style: TextStyle(
                             color: Colors.black87,
@@ -117,29 +117,29 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontFamily: 'Righteous',
                           ),
                         ),
-                        Text(
+                        const Text(
                           """Just-Eat-It is a mason student project. It was developed with the purpose of making the mason experience more fun, and dynamic for students, faculty, and visitors.
                                 \n If youre looking for something new and interesting to eat then we got you covered, our algorithm takes into account all local restaurants, your tastes and preferences, and location to give you  the best new thing to try out. 
                             """,
                           style: TextStyle(fontSize: 20),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text("Customize your preferences",
+                        const Text("Customize your preferences",
                             style: TextStyle(
                                 color: Colors.black87,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Righteous')),
-                        Text(
+                        const Text(
                           "We allow you to set cusine types, your favorite picks,and avoid allergic foods",
                           style: TextStyle(fontSize: 20),
                         )
                       ],
                     ),
                   )),
-              VerticalDivider(width: 10, color: Colors.grey, thickness: 1),
+              const VerticalDivider(width: 10, color: Colors.grey, thickness: 1),
               Flexible(
                 flex: 1,
                 fit: FlexFit.tight,
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Already have an account?",
                         style: TextStyle(fontSize: 20),
                       ),
@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const <Widget>[
                             Text(
                               "Lets Eat!",
                               style:
@@ -173,10 +173,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         "Want to Try us?",
                         style: TextStyle(fontSize: 20),
                       ),
@@ -190,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: const <Widget>[
                               Text(
                                 "Create an Account",
                                 style: TextStyle(
