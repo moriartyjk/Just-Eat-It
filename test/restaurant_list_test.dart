@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,22 +11,20 @@ import 'package:justeatit/restaurant_list.dart';
 import 'package:justeatit/signup.dart';
 import 'package:justeatit/restaurants.dart';
 
-
 import 'helpers.dart';
-import 'restaurant_unit_test.dart';
 
 class RestaurantListPageWrapper extends StatelessWidget {
   final FirebaseAuth auth;
   final FirebaseFirestore store;
 
-  RestaurantListPageWrapper({Key? key, required this.auth, required this.store}) : super(key: key);
+  const RestaurantListPageWrapper({Key? key, required this.auth, required this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: RestaurantListPage(auth: auth, store: store),
       routes: {
-         '/preferences': (context) => CustomizerPage(auth: auth),         
+         '/preferences': (context) => CustomizerPage(auth: auth),
          '/login' : (context) => LoginPage(auth : auth),
          '/signup': (context) => SignupPage(auth: auth, store: store),
          '/about' : (context) => LoginPage(auth : auth),

@@ -10,9 +10,9 @@ class RestaurantsPage extends StatefulWidget {
   final FirebaseAuth auth;
   final FirebaseFirestore store;
   // The video isn't loaded properly during the tests, so don't check its progress.
-  final bool ignoreVideoProgress;
+  static bool ignoreVideoProgress = false;
 
-  const RestaurantsPage({ Key? key, required this.auth, required this.store, this.ignoreVideoProgress = false }) : super(key: key);
+  const RestaurantsPage({ Key? key, required this.auth, required this.store }) : super(key: key);
 
   @override
   State<RestaurantsPage> createState() => _RestaurantsPageState();
@@ -53,7 +53,8 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
   /// wait until the animation ends, then scroll down
   void waitForVideoEnd() {
-    if (widget.ignoreVideoProgress || videoController.value.position.inMilliseconds >= 6000) {
+    final finished = videoController.value.position.inMilliseconds >= 6000 || RestaurantsPage.ignoreVideoProgress;
+    if (finished) {
       videoController.removeListener(waitForVideoEnd);
       setState(() => recommended = recommender!.recommend());
       pageController.animateTo(1000, duration: const Duration(milliseconds: 1000), curve: Curves.easeIn);
