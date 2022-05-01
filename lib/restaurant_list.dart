@@ -18,7 +18,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
   @override
   Widget build(BuildContext context) {
     var restaurants = widget.store.collection("restaurants");
-    var docSnap = restaurants.doc().snapshots();
 
     return Scaffold(
       appBar: JustEatItAppBar.create(context, widget.auth),
@@ -29,7 +28,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           Container(
             alignment: Alignment.center,
             color: Colors.green.shade50,
-            height: 100,
+            height: 80,
             width: MediaQuery.of(context).size.width,
             child: Text("Restaurant List",
               style: TextStyle(
@@ -40,31 +39,33 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             ),
           ),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: widget.store.collection('restaurants').snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) return const Text('Loading...');
-                final int messageCount = snapshot.data!.docs.length;
-                return ListView.builder(
-                  itemCount: messageCount,
-                  itemBuilder: (_, int index) {
-                    final DocumentSnapshot data = snapshot.data!.docs[index];
-                    return ListTile(
-                      title: Text(
-                        '${data['name']} (${data['location']})',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.green.shade900,
+            child: FractionallySizedBox(
+              widthFactor: 0.8,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: restaurants.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return const Text('Loading...');
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (_, index) {
+                      final data = snapshot.data!.docs[index];
+                      return ListTile(
+                        title: Text(
+                          '${data['name']} (${data['location']})',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.green.shade900,
+                          ),
                         ),
-                      ),
-                      subtitle: Text(
-                        data['description'],
-                        textAlign: TextAlign.justify,
-                      ),
-                    );
-                  },
-                );
-              },
+                        subtitle: Text(
+                          data['description'],
+                          textAlign: TextAlign.justify,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
           Container(
