@@ -12,6 +12,7 @@ import 'package:justeatit/signup.dart';
 import 'package:justeatit/restaurants.dart';
 
 import 'helpers.dart';
+import 'recommend_unit_test.dart';
 
 class RestaurantListPageWrapper extends StatelessWidget {
   final FirebaseAuth auth;
@@ -58,14 +59,12 @@ void main() {
       mockUser: MockUser()
     );
     await tester.pumpWidget(RestaurantListPageWrapper(auth: auth, store: store));
-    await tester.tap(find.widgetWithText(ElevatedButton, "Get Recommendation"));
-    await tester.pump();
-    //expect(find.textContaining('Go!'), findsWidgets);
+    await tester.tap(find.text("Get Recommendation"));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Go!'), findsWidgets);
     expect(find.byType(ElevatedButton), findsWidgets);
-
   });
 
-  /* CAN'T SEEM TO GET THIS ONE...
   testWidgets('Restaurant names are correctly displayed', (tester) async {
     setDisplayDimensions(tester);
     final store = FakeFirebaseFirestore();
@@ -76,8 +75,8 @@ void main() {
     await tester.pumpWidget(RestaurantListPageWrapper(auth: auth, store: store));
     await addRestaurant(store, chipotle);
     await tester.pumpAndSettle(const Duration(milliseconds: 100));
-    expect(find.text("Chipotle - Johnson Center"), findsWidgets);
-    //expect(find.byType(SliverList), findsWidgets); //look for a sliverlist
-    //expect(find.widgetWithText(SliverList, "Chipotle - Johnson Center"), findsOneWidget);
-  });*/
+    expect(find.textContaining(chipotle['name']!.toString()), findsWidgets);
+    expect(find.textContaining(chipotle['location']!.toString()), findsWidgets);
+    expect(find.text(chipotle['description']!.toString()), findsWidgets);
+  });
 }
